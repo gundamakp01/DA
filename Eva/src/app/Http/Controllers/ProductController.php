@@ -1,0 +1,96 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Resources\ProductDetailResource;
+use App\Http\Resources\ProductPaginationCollection;
+use App\Repositories\CategoryRepository;
+use App\Repositories\ProductRepository;
+use Illuminate\Http\Request;
+
+class ProductController extends Controller
+{
+    public $productRepository;
+    public $categoryRepository;
+
+
+    public function __construct(ProductRepository $productRepository, CategoryRepository $categoryRepository)
+    {
+        $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $products = $this->productRepository->paginate(24);
+        return $this->responseOk(new ProductPaginationCollection($products));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $product = $this->productRepository->create($request->only('name', 'price', 'description'));
+        if ($images = $request->file('images')) {
+            foreach ($images as $image) {
+                $path = $image->store('public/uploads/images');
+                $product->images()->create(
+                    [
+                        'url' => $path,
+                        'name' => $image->getClientOriginalName(),
+                        'imageable_id' => $product->id
+                ]);
+            }
+        }
+        return $product;
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $product = $this->productRepository->find($id);
+        return $this->responseOk(new ProductDetailResource($product));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $product = $this->productRepository->findOrFail($id);
+        if ($images = $request->file('images')) {
+            $product->images()->delete();
+            foreach ($images as $image) {
+                $path = $image->store('public/uploads/images');
+                $product->images()->create(
+                    [
+                        'url' => $path,
+                        'name' => $image->getClientOriginalName(),
+                        'imageable_id' => $product->id
+                    ]);
+            }
+        }
+        return $this->productRepository->update($request->only('name', 'price', 'description'), $product->id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        return $this->productRepository->delete($id);
+    }
+
+    public function getProductByCategoryId($categoryId)
+    {
+        $category = $this->categoryRepository->getDescendantsAndSelf($categoryId);
+        $categoryIds = $category->pluck('id');
+        $products = $this->productRepository->getProductByCategoryIds($categoryIds);
+        return $this->responseOk(new ProductPaginationCollection($products));
+    }
+}

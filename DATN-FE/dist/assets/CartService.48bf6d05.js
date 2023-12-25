@@ -1,0 +1,1 @@
+import{A as r}from"./index.5575964e.js";const c={getCart(){return r.get("carts")},createCart(t){return r.post("carts",t)},deleteCart(t){return r.delete(`carts/${t}`)},updateCart(t,e){return console.log(typeof t),r.update(`carts/${t}`,e)},getCartById(t){return r.get(`carts/${t}`)}};export{c as C};

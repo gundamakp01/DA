@@ -1,0 +1,1 @@
+import{A as r}from"./index.5575964e.js";const o={getProduct(){return r.get("products")},createProduct(t){return r.post("products",t)},deleteProduct(t){return r.delete(`products/${t}`)},updateProduct(t,e){return r.update(`products/${t}`,e)},getProductById(t){return r.get(`products/${t}`)},getProductByCategoryId(t,e){return r.get(`categories/${t}/products`,e)}};export{o as P};
