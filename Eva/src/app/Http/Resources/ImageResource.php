@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ImageResource extends JsonResource
 {
@@ -15,9 +16,14 @@ class ImageResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if (Str::contains($this->url, 'product.hstatic.net')) {
+            $image_url = $this->url;
+        } else {
+            $image_url = $this->url ? url(Storage::url($this->url)) : null;
+        }
         return [
             'id' => $this->id,
-            'url' => $this->url ? url(Storage::url($this->url)) : null,
+            'url' => $image_url,
             'name' => $this->name,
         ];
     }

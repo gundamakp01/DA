@@ -164,9 +164,13 @@ export default {
       return count;
     },
     async order() {
+      var toast = useToast();
       const order = await OrderService.createOrder();
       if (order) {
-        await OrderService.payment()
+        toast.success("Đặt hàng thành công!", {
+          timeout: 2000,
+        });
+        this.$router.push('/')
       }
     }
   },
