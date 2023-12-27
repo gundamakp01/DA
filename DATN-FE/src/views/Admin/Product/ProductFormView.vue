@@ -35,6 +35,7 @@ export default {
       if (resp) {
         this.product = resp.data.data
         this.urls = this.product.image.map(x => x.url)
+        this.product.price = this.product?.price?.replace(/,/g, '')
       }
     },
   },
