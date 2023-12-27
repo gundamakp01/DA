@@ -14,8 +14,14 @@ class ProductRepository extends BaseRepository
         return Product::class;
     }
 
-    public function getProductByCategoryIds($categoryIds)
+    public function getProductByCategoryIds($categoryIds, $params)
     {
-        return $this->model->whereIn('category_id', $categoryIds)->paginate(24);
+        return $this->model->whereIn('category_id', $categoryIds)
+            ->when(array_key_exists('brands', $params), function ($query) use ($params) {
+                $query->whereIn('vendor', $params['brands']);
+            })->when(array_key_exists('price', $params), function ($query) use ($params) {
+                $query->where('price', '>', $params['price']);
+            })->when(array_key_exists('size', $params), function ($query) use ($params) {
+            })->paginate(24);
     }
 }

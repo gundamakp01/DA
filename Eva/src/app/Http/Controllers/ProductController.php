@@ -86,11 +86,11 @@ class ProductController extends Controller
         return $this->productRepository->delete($id);
     }
 
-    public function getProductByCategoryId($categoryId)
+    public function getProductByCategoryId($categoryId, Request $request)
     {
         $category = $this->categoryRepository->getDescendantsAndSelf($categoryId);
         $categoryIds = $category->pluck('id');
-        $products = $this->productRepository->getProductByCategoryIds($categoryIds);
+        $products = $this->productRepository->getProductByCategoryIds($categoryIds, $request->all());
         return $this->responseOk(new ProductPaginationCollection($products));
     }
 }
