@@ -18,5 +18,8 @@ const UserService  = {
     signup(data) {
         return ApiService.post(`users/signup`, data)
     },
+    payment(id) {
+        return ApiService.get(`users/vnpay-payment/${id}`)
+    }
 }
 export default UserService

@@ -6,9 +6,6 @@ const OrderService  = {
     createOrder(data) {
         return ApiService.post('orders', data)
     },
-    payment(data) {
-        // return ApiService.post('orders', data)
-    },
     deleteOrder(id) {
         return ApiService.delete(`orders/${id}`)
     },

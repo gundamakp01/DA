@@ -73,4 +73,12 @@ class OrderRepository extends BaseRepository
             'total_orders' => $total_orders
         ];
     }
+
+    public function sumPriceByOrderID()
+    {
+        return $this->model
+            ->selectRaw('SUM(carts.price) as total_price')
+            ->join('carts', 'carts.order_id', '=', 'orders.id')
+            ->value('total_price');
+    }
 }

@@ -56,7 +56,7 @@ class OrderController extends Controller
             'payment_method' => 1,
             'payment_date' => now()
         ]);
-        return $this->responseOk($order);
+        return $this->responseOk(new OrderResource($order));
     }
 
     /**

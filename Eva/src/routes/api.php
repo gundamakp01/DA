@@ -42,6 +42,7 @@ Route::group([
     Route::get('carts-order/{id}', [CartController::class, 'getCartByOrderID']);
     Route::post('orders/change-status', [OrderController::class, 'changeStatus']);
     Route::apiResource('orders', OrderController::class);
+    Route::get('users/vnpay-payment/{id}', [UserController::class, 'payment'])->name('vnpay-payment');
     Route::get('home', [HomeController::class, 'index']);
     Route::apiResource('chats', ChatController::class);
     Route::apiResource('rooms', RoomController::class);

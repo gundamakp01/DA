@@ -104,6 +104,20 @@
               <p>{{ (totalPrice + 35000).toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</p>
             </div>
+            <div class="m-2">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" v-model="paymentMethod" value="1" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Tiền mặt
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" v-model="paymentMethod" value="2" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Thanh toán VNPay
+                </label>
+              </div>
+            </div>
             <div class="d-flex justify-content-end">
               <Button class="me-3" :button_text="'process_to_checkout'" @click="order" />
             </div>
@@ -121,12 +135,14 @@ import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
 import { useToast } from "vue-toastification";
 import { CartService, OrderService } from "../services";
+import {UserService} from "@/services";
 export default {
   name: "Cartview",
   components: { Button, Navbar, Footer },
   data() {
     return {
       carts: [],
+      paymentMethod: 1
     };
   },
   methods: {
@@ -174,7 +190,14 @@ export default {
         toast.success("Đặt hàng thành công!", {
           timeout: 2000,
         });
-        this.$router.push('/')
+        if (this.paymentMethod == 1) {
+          this.$router.push('/')
+        } else {
+          const payment = await UserService.payment(order?.data?.data?.id);
+          if (payment) {
+            window.location.href = payment.data.data
+          }
+        }
       }
     }
   },
