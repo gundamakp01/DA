@@ -95,7 +95,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/login" class="nav-link " aria-current="page" v-if="userStore().user?.name === ''">
+                        <router-link to="/login" class="nav-link " aria-current="page" v-if="!user">
                             <button class="button_1 px-3" type="button">
                                 <i class="fa fa-user me-2"></i>
                                 Login
@@ -131,7 +131,8 @@ export default {
     name: 'Navbar',
     data() {
         return {
-            upHere: false
+            upHere: false,
+            user: userStore().user
         }
     },
     methods: {
@@ -140,13 +141,7 @@ export default {
             const resp = await LoginService.logout();
             localStorage.removeItem('__TOKEN');
             localStorage.removeItem('user');
-            userStore().user = {
-                id: '',
-                name: '',
-                email: '',
-                role: ''
-            };
-            console.log(userStore)
+            userStore().user = null;
             this.$router.push('/login');
         },
     }

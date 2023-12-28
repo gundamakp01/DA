@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     async getProducts() {
-      const resp = await ProductService.getProduct();
+      const resp = await ProductService.getProductByCategoryId(5);
       if (resp) {
         this.products = resp.data.data.products;
       }

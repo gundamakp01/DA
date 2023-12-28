@@ -8,7 +8,8 @@ export default {
   data() {
     return {
       isLoading: userStore().isLoading,
-      user: userStore().user
+      user: userStore().user,
+      isShow: false
     };
   },
   components: {
@@ -22,16 +23,21 @@ export default {
         this.isLoading = newVal;
       }
     );
+    watch(
+      () => userStore().user,
+      (newVal) => {
+        this.isShow = newVal?.name && newVal?.role === 1;
+      }
+    );
   },
 };
 </script>
 
 <template>
   <div>
-    {{ user }}
     <Loading :loading="isLoading"></Loading>
     <router-view></router-view>
-    <Chatbox v-if="user?.role === 1"/>
+    <Chatbox v-if="isShow"/>
   </div>
 </template>
 

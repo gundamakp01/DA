@@ -3,7 +3,8 @@
     v-for="product in products"
     class="product text-center col-lg-4 col-md-6"
   >
-    <img class="img-fluid mb-md-3" :src="product?.image?.url" alt="cc" />
+    <img class="img-fluid mb-md-3" v-if="product?.image?.url" :src="product?.image?.url" alt="cc" />
+    <img class="img-fluid mb-md-3" v-else src="http://product.hstatic.net/200000000133/product/23…05n_1_c2bc1d5587c845b28b4f52685ffd0cb3_master.jpg" alt="cc" />
     <div class="star py-3">
       <i class="fa fa-star"></i>
       <i class="fa fa-star"></i>

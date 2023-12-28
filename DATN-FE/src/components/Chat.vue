@@ -87,13 +87,14 @@ const setup = async (username) => {
 
 var channel = pusher.subscribe(`chat.${userStore().user.id}`);
 channel.bind("chat-event", function (data) {
-  rooms.value.forEach(function (room) {
-    room.users.forEach(function (user) {
-      if (user.id === data.conversation.senderId) {
-        messages.value = [...messages.value, data.conversation]
-        markMessagesSeen(data.conversation)
-      }
-    })
+  const room = rooms.value.find(function (room) {
+    return room._id === currentRoom.value;
+  });
+  room.users.forEach(function (user) {
+    if (user._id == data.conversation.senderId) {
+      messages.value = [...messages.value, data.conversation]
+      markMessagesSeen(data.conversation)
+    }
   })
 })
 

@@ -43,7 +43,6 @@ export const userStore = defineStore('userStore', {
     async login(data){
       localStorage.setItem('__TOKEN', data.access_token);
       this.user = data.user
-      this.router.push('/')
     },
 
     async signup(data){

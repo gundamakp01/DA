@@ -66,6 +66,11 @@ export default {
       if (isFormCorrect == true) {
         const resp = await LoginService.login({ email: this.email, password: this.password });
         await userStore().login(resp.data)
+        if (resp.data.user.id === 1) {
+          this.$router.push('/admin');
+        } else {
+          this.$router.push({ name: "Home" });
+        }
       }
     },
   }

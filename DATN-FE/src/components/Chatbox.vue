@@ -156,9 +156,24 @@ export default {
 
       return text.length > 0;
     },
+    async getChat() {
+      const response = await ChatService.getChat()
+      this.messages = response.data.data.conversation
+    }
+  },
+  watch: {
+    userId: function (val) {
+      if (!val) {
+        const dropdownMenu = self.$el.querySelector(
+          ".chatbox-message-dropdown-menu"
+        );
+        dropdownMenu.classList.remove("show");
+      }
+    },
   },
   mounted() {
     const self = this;
+    self.getChat();
     var channel = pusher.subscribe(`chat.${userStore().user.id}`);
     channel.bind("chat-event", function (data) {
       if (data.conversation.send !== userStore().user.id) {
