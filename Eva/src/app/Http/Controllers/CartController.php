@@ -36,6 +36,8 @@ class CartController extends Controller
         return $this->responseOk($this->cartRepository->create(array_merge(
             $request->validated(),
             [
+                'size' => $request->size,
+                'color' => $request->color,
                 'user_id' => auth()->id(),
                 'price' => $product->price,
                 'discount' => $product->discount,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateProductRequest;
 use App\Http\Resources\ProductDetailResource;
 use App\Http\Resources\ProductPaginationCollection;
 use App\Repositories\CategoryRepository;
@@ -31,9 +32,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
-        $product = $this->productRepository->create($request->only('name', 'price', 'description'));
+        $color = explode(',', trim($request->color));
+        $request['color'] = json_encode($color);
+        $product = $this->productRepository->create($request->only('name', 'price', 'description',
+            'size_s', 'size_m', 'size_l', 'size_xl', 'color'));
         if ($images = $request->file('images')) {
             foreach ($images as $image) {
                 $path = $image->store('public/uploads/images');
@@ -60,7 +64,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CreateProductRequest $request, string $id)
     {
         $product = $this->productRepository->findOrFail($id);
         if ($images = $request->file('images')) {
@@ -75,7 +79,10 @@ class ProductController extends Controller
                     ]);
             }
         }
-        return $this->productRepository->update($request->only('name', 'price', 'description'), $product->id);
+        $color = explode(',', trim($request->color));
+        $request['color'] = json_encode($color);
+        return $this->productRepository->update($request->only('name', 'price', 'description',
+            'size_s', 'size_m', 'size_l', 'size_xl', 'color'), $product->id);
     }
 
     /**

@@ -14,7 +14,7 @@ class CartRepository extends BaseRepository
 
     public function changeStatusCartByUser(int $user_id, int $order_id)
     {
-        return $this->model->where('user_id', $user_id)->update(['order_id' => $order_id]);
+        return $this->model->where('user_id', $user_id)->whereNull('order_id')->update(['order_id' => $order_id]);
     }
 
     public function getCartByOrderID(string $order_id)

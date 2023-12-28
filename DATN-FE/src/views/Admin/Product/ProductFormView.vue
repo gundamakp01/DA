@@ -35,7 +35,9 @@ export default {
       if (resp) {
         this.product = resp.data.data
         this.urls = this.product.image.map(x => x.url)
+        this.product.images = this.product.image.map(x => x.url)
         this.product.price = this.product?.price?.replace(/,/g, '')
+        this.product.color = this.product?.color?.join(",");
       }
     },
   },
@@ -57,6 +59,28 @@ export default {
     <div class="mb-3">
       <label class="form-label">Price</label>
       <input type="text" class="form-control" v-model="product.price">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Color</label>
+      <input type="text" class="form-control" v-model="product.color">
+    </div>
+    <div class="row mb-3">
+      <div class="col-3">
+        <label class="form-label">size s</label>
+        <input type="text" class="form-control" v-model="product.size_s">
+      </div>
+      <div class="col-3">
+        <label class="form-label">size m</label>
+        <input type="text" class="form-control" v-model="product.size_m">
+      </div>
+      <div class="col-3">
+        <label class="form-label">size l</label>
+        <input type="text" class="form-control" v-model="product.size_l">
+      </div>
+      <div class="col-3">
+        <label class="form-label">size xl</label>
+        <input type="text" class="form-control" v-model="product.size_xl">
+      </div>
     </div>
     <div class="mb-3">
       <label class="form-label">Description</label>

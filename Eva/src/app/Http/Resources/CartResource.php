@@ -22,7 +22,7 @@ class CartResource extends JsonResource
             'quantity' => $this->quantity,
             'price' => number_format($this->price),
             'discount' => $this->discount,
-            'size' => $this->size,
+            'size' => strtoupper($this->size),
             'color' => $this->color,
             'material' => $this->material,
         ];

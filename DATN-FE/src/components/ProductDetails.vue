@@ -69,10 +69,10 @@
         data-option-index="0"
       >
         <div class="d-flex flex-column pro-title">
-          <span>Màu sắc: </span><strong> {{ product?.color[0] }}</strong>
+          <span>Màu sắc: </span>
         </div>
         <div class="select-swap" v-for="color in product.color" :key="color">
-          <div :data-value="color" class="n-sd swatch-element color nau">
+          <div @click="cart.color = color" :class="{ 'bg-info': cart.color == color }" :data-value="color" class="py-2 px-3 border">
             <label class="nau sd" for="swatch-0-nau">
               <span>{{ color }}</span>
             </label>
@@ -88,31 +88,23 @@
         <div class="d-flex align-items-center pro-title">
           <span>Kích thước : </span>
         </div>
-        <div class="select-swap d-flex my-3">
-          <div data-value="S" class="n-sd swatch-element" v-if="product.size_s">
-            <label class="S">
-              <span>S</span>
-            </label>
-          </div>
-          <div data-value="M" class="n-sd swatch-element" v-if="product.size_m">
-            <label class="M">
-              <span>M</span>
-            </label>
-          </div>
-          <div data-value="L" class="n-sd swatch-element" v-if="product.size_l">
-            <label class="L">
-              <span>L</span>
-            </label>
-          </div>
-          <div
-            data-value="XL"
-            class="n-sd swatch-element"
-            v-if="product.size_xl"
-          >
-            <label class="XL">
-              <span>XL</span>
-            </label>
-          </div>
+        <div class="list-group">
+          <label :class="{ 'bg-info': cart.size == 's' }" class="list-group-item">
+            <input type="radio" name="radioOption" v-model="cart.size" value="s" class="form-check-input d-none">
+            Size S
+          </label>
+          <label :class="{ 'bg-info': cart.size == 'm' }" class="list-group-item">
+            <input type="radio" name="radioOption" v-model="cart.size" value="m" class="form-check-input d-none">
+            Size M
+          </label>
+          <label :class="{ 'bg-info': cart.size == 'l' }" class="list-group-item">
+            <input type="radio" name="radioOption" v-model="cart.size" value="l" class="form-check-input d-none">
+            Size L
+          </label>
+          <label :class="{ 'bg-info': cart.size == 'xl' }" class="list-group-item">
+            <input type="radio" name="radioOption" v-model="cart.size" value="xl" class="form-check-input d-none">
+            Size XL
+          </label>
         </div>
       </div>
       <div class="d-flex align-items-baseline mt-5">
@@ -144,6 +136,8 @@ export default {
       cart: {
         product_id: this.$route.params.id,
         quantity: 1,
+        size: 's',
+        color: ''
       },
       button_text: "Add To Cart",
       isVisible: 0,
@@ -166,9 +160,10 @@ export default {
       }
     },
   },
-  async created() {
+  async mounted() {
     await this.fetchProduct();
-  },
+    this.cart.color = this.product.color[0];
+  }
 };
 </script>
 <style lang="css">

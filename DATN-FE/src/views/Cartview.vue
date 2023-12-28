@@ -12,6 +12,7 @@
             <td>Remove</td>
             <td>Image</td>
             <td>Product</td>
+            <td>Size</td>
             <td>Price</td>
             <td>Quantity</td>
             <td>Total</td>
@@ -29,6 +30,9 @@
             </td>
             <td>
               <h5>{{ cart.product_name }}</h5>
+            </td>
+            <td>
+              <h5>{{ cart.size }}</h5>
             </td>
             <td>
               <h5>

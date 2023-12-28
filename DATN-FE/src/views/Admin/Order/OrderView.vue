@@ -45,6 +45,8 @@
                 <td>Image</td>
                 <td>Product</td>
                 <td>Price</td>
+                <td>Size</td>
+                <td>Color</td>
                 <td>Quantity</td>
                 <td>Total</td>
               </tr>
@@ -66,6 +68,8 @@
                     }}đ
                   </h5>
                 </td>
+                <td>{{ cart.size?.toUpperCase() }}</td>
+                <td>{{ cart.color?.toUpperCase() }}</td>
                 <td>{{ cart.quantity }}</td>
                 <td>
                   <h5>

@@ -21,6 +21,10 @@ class ProductListResource extends JsonResource
             'price' => number_format($this->price),
             'is_new' => $this->is_new,
             'discount' => $this->discount,
+            'size_s' => $this->size_s,
+            'size_m' => $this->size_m,
+            'size_l' => $this->size_l,
+            'size_xl' => $this->size_xl,
         ];
     }
 }

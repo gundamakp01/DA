@@ -30,7 +30,7 @@ class ProductDetailResource extends JsonResource
             'discount' => $this->discount,
             'vendor' => $this->vendor,
             'material' => $this->material,
-            'color' => $this->color,
+            'color' => json_decode($this->color),
         ];
     }
 }
