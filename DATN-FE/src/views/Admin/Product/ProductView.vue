@@ -12,7 +12,7 @@
     </thead>
     <tbody>
     <tr v-for="(product, index) in products" :key="index" class="align-middle">
-      <th scope="row">{{ index + 1 }}</th>
+      <th scope="row">{{ pagination.from + index }}</th>
       <td>{{ product.name }}</td>
       <td><img width="100" height="80" :src="product.image?.url" alt=""></td>
       <td>{{ product.price }}</td>
@@ -23,6 +23,21 @@
     </tr>
     </tbody>
   </table>
+  <div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item" v-if="pagination.current_page > 1">
+          <a class="page-link" href="#" @click.prevent="changePage(pagination.current_page - 1)">Previous</a>
+        </li>
+        <li class="page-item" v-for="page in pagination.per_page" :key="page" :class="{ 'active': page === pagination.current_page }">
+          <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
+        </li>
+        <li class="page-item" v-if="pagination.current_page < pagination.per_page">
+          <a class="page-link" href="#" @click.prevent="changePage(pagination.current_page + 1)">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </template>
 
 <script>
@@ -34,6 +49,8 @@ export default {
   data() {
     return {
       products: [],
+      pagination: {},
+      page: 1
     }
   },
   mounted() {
@@ -41,9 +58,10 @@ export default {
   },
   methods: {
     async fetchProducts() {
-      const resp = await ProductService.getProduct()
+      const resp = await ProductService.getProduct(this.page)
       if (resp) {
         this.products = resp.data.data.products
+        this.pagination = resp.data.data.pagination
       }
     },
     destroy(id) {
@@ -60,7 +78,11 @@ export default {
           await this.fetchProducts()
         }
       });
-    }
+    },
+    changePage(page) {
+      this.page = page
+      this.fetchProducts()
+    },
   }
 }
 

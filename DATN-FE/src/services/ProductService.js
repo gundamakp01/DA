@@ -1,7 +1,7 @@
 import ApiService from './ApiService';
 const ProductService  = {
-  getProduct() {
-    return ApiService.get('products')
+  getProduct(page) {
+    return ApiService.get('products', {page : page})
   },
   createProduct(data) {
     return ApiService.post('products', data, {headers : { 'Content-Type': 'multipart/form-data'}})

@@ -7,14 +7,17 @@ use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Repositories\OrderRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function __construct(UserRepository $userRepository)
+    protected $orderRepository;
+    public function __construct(UserRepository $userRepository, OrderRepository $orderRepository)
     {
         $this->userRepository = $userRepository;
+        $this->orderRepository = $orderRepository;
     }
     /**
      * Display a listing of the resource.
@@ -85,15 +88,16 @@ class UserController extends Controller
     }
 
     public function payment(Request $request) {
+        $order = $this->orderRepository->find($request->id);
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "http://localhost:5173/done";
         $vnp_TmnCode = "G6N42BNE";//Mã website tại VNPAY
         $vnp_HashSecret = "MUMWAYJLYWUVXIAARRBYYMJKOVKXQOSA"; //Chuỗi bí mật
 
-        $vnp_TxnRef = random_int(6, 8); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_TxnRef = $order->id;
         $vnp_OrderInfo = 'Thanh toán đơn hàng';
         $vnp_OrderType = 'billpayment';
-        $vnp_Amount = 200000 * 100;
+        $vnp_Amount = $order->withSum('carts', 'price')->value('carts_sum_price');
         $vnp_Locale = 'vn';
         $vnp_BankCode = "NCB";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
@@ -184,8 +188,8 @@ class UserController extends Controller
             header('Location: ' . $vnp_Url);
             die();
         } else {
-            Order::find($request->id)->update(['status' => 2]);
-            Payment::where('order_id', $request->id)->update(['payment_method' => 2]);
+            $order->update(['status' => 2]);
+            $order->payment()->update(['payment_method' => 2]);
             echo json_encode($returnData);
         }
     }
