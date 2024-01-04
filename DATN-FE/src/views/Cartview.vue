@@ -65,7 +65,7 @@
           <tr v-if="carts.length < 1">
             <td colspan="6">
               please purchase the product <br />
-              <router-link to="/shop">Shop</router-link>
+              <router-link to="/categories/1">Shop</router-link>
             </td>
           </tr>
         </tbody>
