@@ -21,13 +21,14 @@
         :button_text="Details"
         @click="goToDetail(product?.id)"
       />
-      <Button :button_text="Buy_now" :btnLoader="loader" />
+      <Button :button_text="Buy_now" :btnLoader="loader" @click="buyNow(product.id)" />
     </div>
   </div>
 </template>
 
 <script>
 import Button from "./Button.vue";
+import { CartService } from "../services";
 
 export default {
   name: "Product",
@@ -37,6 +38,12 @@ export default {
       Buy_now: "Buy Now",
       Details: "Details",
       loader: false,
+      cart: {
+        product_id: '',
+        quantity: 1,
+        size: 's',
+        color: ''
+      },
     };
   },
   components: { Button },
@@ -45,6 +52,13 @@ export default {
     goToDetail(id) {
       this.$router.push({ name: "productDetail", params: { id: id } });
     },
+    async buyNow(productId) {
+      this.cart.product_id = productId
+      const resp = await CartService.createCart(this.cart);
+      if (resp) {
+        this.$router.push({ name: "Cart" });
+      }
+    }
   },
 };
 </script>
