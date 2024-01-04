@@ -105,14 +105,21 @@
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</p>
             </div>
             <div class="m-2">
+              <select v-model="selected">
+                <option v-for="option in options" :value="option.value">
+                  {{ option.text }}
+                </option>
+              </select>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" v-model="paymentMethod" value="1" id="flexRadioDefault1">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" v-model="paymentMethod" value="1"
+                  id="flexRadioDefault1">
                 <label class="form-check-label" for="flexRadioDefault1">
                   Tiền mặt
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" v-model="paymentMethod" value="2" id="flexRadioDefault2">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" v-model="paymentMethod" value="2"
+                  id="flexRadioDefault2">
                 <label class="form-check-label" for="flexRadioDefault2">
                   Thanh toán VNPay
                 </label>
@@ -135,14 +142,16 @@ import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
 import { useToast } from "vue-toastification";
 import { CartService, OrderService } from "../services";
-import {UserService} from "@/services";
+import { UserService } from "@/services";
+import axios from "axios";
 export default {
   name: "Cartview",
   components: { Button, Navbar, Footer },
   data() {
     return {
       carts: [],
-      paymentMethod: 1
+      paymentMethod: 1,
+      provinces: [],
     };
   },
   methods: {
@@ -151,6 +160,18 @@ export default {
       if (resp) {
         this.carts = resp.data.data;
       }
+    },
+    async fetchProvices() {
+      const resp = await axios.get('https://provinces.open-api.vn/api/p/', {
+        headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    }
+      });
+      if (resp) {
+        this.provinces = resp;
+      }
+      console.log(this.provinces)
     },
     formatPrice(cart) {
       return cart?.discount
@@ -203,13 +224,14 @@ export default {
   },
   async created() {
     await this.fetchCarts();
+    await this.fetchProvices();
   },
   computed: {
     // a computed getter
     totalPrice: function () {
       var count = 0;
       for (let i = 0; i < this.carts.length; i++) {
-        count += this.formatPrice(this.carts[i]);
+        count += this.formatPrice(this.carts[i]) * this.carts[i].quantity;
       }
       return count;
     },
