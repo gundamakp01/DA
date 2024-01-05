@@ -2,7 +2,171 @@
     <Navbar />
     <section id="featured" class="pt-5">
         <div class="container mt-5 pt-5">
-            <h3>{{ category.name }}</h3>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3>{{ category.name }}</h3>
+                <div class="filter-inner">
+                    <div class="filter-head">
+                        <p>Bộ lọc:</p>
+                        <a name="button-close" class=" btn-filter-close d-sm-block d-lg-none">
+                            <svg viewBox="0 0 19 19" role="presentation">
+                                <path
+                                    d="M9.1923882 8.39339828l7.7781745-7.7781746 1.4142136 1.41421357-7.7781746 7.77817459 7.7781746 7.77817456L16.9705627 19l-7.7781745-7.7781746L1.41421356 19 0 17.5857864l7.7781746-7.77817456L0 2.02943725 1.41421356.61522369 9.1923882 8.39339828z"
+                                    fill-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="filter-options">
+                        <!-- ./filter sortby -->
+
+                        <!-- ./filter brand -->
+
+                        <div class="filter_group">
+                            <div class="filter_group_block">
+                                <div class="filter_group-subtitle" @mouseover="isShow = 1" @mouseleave="isShow = 0">
+                                    <span>Thương hiệu</span>
+                                </div>
+                                <div :class="`filter_group-content filter-brand ${isShow === 1 ? 'd-block' : 'd-none'}`"
+                                    @mouseover="isShow = 1" @mouseleave="isShow = 0" style="">
+                                    <ul class="checkbox-list">
+                                        <li>
+                                            <input type="checkbox" id="data-brand-p1" value="Khác" name="brand-filter"
+                                                data-vendor="(vendor:product contains Khác)" v-model="search.brands">
+                                            <label for="data-brand-p1">Khác</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" id="data-brand-p2" value="Eva" name="brand-filter"
+                                                data-vendor="(vendor:product contains Eva)" v-model="search.brands">
+                                            <label for="data-brand-p2">Eva</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" id="data-brand-p3" value="Eva De Eva" name="brand-filter"
+                                                data-vendor="(vendor:product contains Eva De Eva)" v-model="search.brands">
+                                            <label for="data-brand-p3">Eva De Eva</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" id="data-brand-p4" value="Lady me" name="brand-filter"
+                                                data-vendor="(vendor:product contains Lady me)" v-model="search.brands">
+                                            <label for="data-brand-p4">Lady me</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" id="data-brand-p5" value="Unique" name="brand-filter"
+                                                data-vendor="(vendor:product contains Unique)" v-model="search.brands">
+                                            <label for="data-brand-p5">Unique</label>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ./filter color -->
+
+                        <!-- ./filter size -->
+
+                        <div class="filter_group">
+                            <div class="filter_group_block">
+                                <div class="filter_group-subtitle" @mouseover="isShow = 2" @mouseleave="isShow = 0">
+                                    <span>Size</span>
+                                </div>
+                                <div :class="`filter_group-content filter-size ${isShow === 2 ? 'd-block' : 'd-none'}`"
+                                    @mouseover="isShow = 2" @mouseleave="isShow = 0">
+                                    <ul class="checkbox-list">
+                                        <li>
+                                            <input type="checkbox" id="data-size-p1" value="S" name="size-filter"
+                                                data-size="(variant:product=S)" v-model="search.size">
+                                            <label for="data-size-p1">S</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" id="data-size-p2" value="M" name="size-filter"
+                                                data-size="(variant:product=M)" v-model="search.size">
+                                            <label for="data-size-p2">M</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" id="data-size-p3" value="L" name="size-filter"
+                                                data-size="(variant:product=L)" v-model="search.size">
+                                            <label for="data-size-p3">L</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" id="data-size-p4" value="XL" name="size-filter"
+                                                data-size="(variant:product=XL)" v-model="search.size">
+                                            <label for="data-size-p4">XL</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" id="data-size-p5" value="XXL" name="size-filter"
+                                                data-size="(variant:product=XXL)" v-model="search.size">
+                                            <label for="data-size-p5">XXL</label>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ./filter price -->
+
+                        <div class="filter_group">
+                            <div class="filter_group_block">
+                                <div class="filter_group-subtitle" @mouseover="isShow = 3" @mouseleave="isShow = 0">
+                                    <span>Khoảng giá</span>
+                                </div>
+                                <div :class="`filter_group-content filter-price ${isShow === 3 ? 'd-block' : 'd-none'}`"
+                                    @mouseover="isShow = 3" @mouseleave="isShow = 0">
+                                    <label for="customRange1" class="form-label">Example range</label>
+                                    <input type="range" v-model="search.price" min="0" max="3000000" step="10000"
+                                        class="form-range" id="customRange1">
+                                    <div class="filter-price__value">
+                                        <div id="smooth-steps-values">0đ - 3,000,000đ</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ./filter event -->
+
+                        <div class="filter_group">
+                            <div class="filter_group_block">
+                                <div class="filter_group-subtitle" @mouseover="isShow = 4" @mouseleave="isShow = 0">
+                                    <span>Theo dịp</span>
+                                </div>
+                                <div :class="`filter_group-content filter-event ${isShow === 4 ? 'd-block' : 'd-none'}`"
+                                    @mouseover="isShow = 4" @mouseleave="isShow = 0">
+
+                                    <ul class="checkbox-list">
+
+                                        <li>
+                                            <input type="checkbox" id="data-event-p1" value="Đi làm" name="event-filter"
+                                                data-event="(tag:product=Đi làm)">
+                                            <label for="data-event-p1">Đi làm</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" id="data-event-p2" value="Đi chơi" name="event-filter"
+                                                data-event="(tag:product=Đi chơi)">
+                                            <label for="data-event-p2">Đi chơi</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" id="data-event-p3" value="Đi tiệc" name="event-filter"
+                                                data-event="(tag:product=Đi tiệc)">
+                                            <label for="data-event-p3">Đi tiệc</label>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             <hr class="mx-2">
             <ul class="menuCollection">
                 <li v-for="category in categories"><span @click="category_id = category.id">{{ category.name }} </span></li>
@@ -26,6 +190,7 @@ import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import { ProductService } from '../services';
 import { CategoryService } from '../services';
+import debounce from 'lodash.debounce'
 // const productStore = useProductStore();
 
 export default {
@@ -35,7 +200,7 @@ export default {
         Navbar,
         Footer
     },
-    data() {
+    data: function () {
         return {
             card_class: 'col-lg-3 col-md-6',
             id: 1,
@@ -45,13 +210,23 @@ export default {
             categories: [],
             category: {},
             page: 1,
-            pagination: {}
+            pagination: {},
+            search: {
+                brands: [],
+                size: [],
+                price: 0,
+                events: [],
+            },
+
+            isShow: 0
             // Product_list: productStore.data.filter((product) => product.category == 'shop'),
         }
     },
     methods: {
-        async fetchProduct() {
-            const resp = await ProductService.getProductByCategoryId(this.category_id, { page: this.page });
+        fetchProduct: debounce(async function () {
+            const resp = await ProductService.getProductByCategoryId(this.category_id, { 
+                page: this.page, brands: this.search.brands, size: this.search.size, price: this.search.price, events: this.search.events 
+            });
             if (resp) {
                 this.products = [
                     ...this.products,
@@ -59,7 +234,7 @@ export default {
                 ]
                 this.pagination = resp.data.data.pagination
             }
-        },
+        }, 500),
         async fetchCategoryByParentId() {
             const resp = await CategoryService.getProductByCategoryId(this.category_id);
             if (resp) {
@@ -97,6 +272,12 @@ export default {
         page: function (val) {
             this.fetchProduct();
         },
+        search: {
+            handler: function (val) {
+                this.fetchProduct();
+            },
+            deep: true
+        }
     }
 
 
@@ -163,5 +344,78 @@ span {
     -webkit-transition: color 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86), border 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86);
     transition: color 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86), border 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
-</style>
+
+.filter-head {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 30px;
+}
+
+.filter-options {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.filter_group_block {
+    position: relative;
+}
+
+.filter_group_block .filter_group-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0;
+    background: url('@/assets/img/down-arrow.png');
+    background-size: 14px;
+    background-position: center right;
+    background-repeat: no-repeat;
+    padding-right: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.filter_group_block .filter_group-content {
+    display: block;
+    position: absolute;
+    background: #FFFFFF;
+    width: 220px;
+    padding: 15px;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-list li {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 0 0 12px;
+    padding: 0 0 0 25px;
+    cursor: pointer;
+}
+
+.checkbox-list input {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin-top: 0;
+    vertical-align: top;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid transparent;
+}
+
+.checkbox-list li label {
+    font-size: 14px;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.filter-inner {
+    display: flex;
+    align-items: center;
+}</style>
 

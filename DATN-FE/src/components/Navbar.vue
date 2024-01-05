@@ -30,7 +30,6 @@
                         <div :class="`menuList-submain multicolumn ${upHere ? 'menu-visible' : 'menu-hidden'}`"
                             @mouseover="upHere = true" @mouseleave="upHere = false">
                             <div class="multicolumn-container-new">
-
                                 <router-link class="itemMegaMenu" to="/categories/1">
                                     <img src="https://file.hstatic.net/200000000133/file/img_megamenu2_1_e08027b8bd954f039a301b77529755d0.jpg"
                                         alt="Đầm" height="230" width="230">
@@ -202,6 +201,8 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
+    color: #121212;
 }
 
 .img {

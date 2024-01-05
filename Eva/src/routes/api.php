@@ -13,6 +13,9 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\WardController;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -65,3 +68,6 @@ Route::prefix('categories')->controller(CategoryController::class)->group(functi
     Route::get('/{categoryId}/products', [ProductController::class, 'getProductByCategoryId']);
     Route::get('/{categoryId}/children', [CategoryController::class, 'getCategoryByParentId']);
 });
+Route::get('/provinces', [ProvinceController::class, 'index']);
+Route::get('/provinces/{provinceId}/districts', [DistrictController::class, 'getDistrictByProvince']);
+Route::get('/districts/{districtId}/wards', [WardController::class, 'getWardsByProvince']);
