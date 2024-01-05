@@ -10,6 +10,9 @@ import OrderService from './OrderService';
 import HomeService from './HomeService';
 import ConversationService from './ConversationService';
 import BlogService from './BlogService';
+import ProvinceService from './ProvinceService';
+import WardService from './WardService';
+import DistrictService from './DistrictService';
 
 export {
   CategoryService,
@@ -24,4 +27,7 @@ export {
   ConversationService,
   HomeService,
   BlogService,
+  ProvinceService,
+  DistrictService,
+  WardService
 }

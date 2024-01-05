@@ -26,11 +26,11 @@ const routes = [
     name: 'signup',
     component: () => import("../views/SignUp.vue"),
   },
-  {
-    path: '/login-with-phone',
-    name: 'LoginWithPhone',
-    component: () => import("../views/LoginWithPhone.vue"),
-  },
+  // {
+  //   path: '/login-with-phone',
+  //   name: 'LoginWithPhone',
+  //   component: () => import("../views/LoginWithPhone.vue"),
+  // },
   {
     path: '/blog',
     children: [

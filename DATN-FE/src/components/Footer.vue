@@ -23,15 +23,16 @@
                 <h5 class="pb-2">Contact Us</h5>
                 <div>
                     <h6 class="text-uppercase mt-2">Address</h6>
-                    <p>Suart, Gujarat, India</p>
+                    <p>235 Hoàng Quốc Việt, Cổ Nhuế, <br>Bắc Từ Liêm, Hà Nội</p>
                 </div>
                 <div>
                     <h6 class="text-uppercase mt-2">Phone</h6>
-                    <a href="tel:+917048432374">+91 70484 32374</a>
+                    <a href="tel:+917048432374">0964563504</a>
                 </div>
                 <div>
                     <h6 class="text-uppercase mt-2">Email</h6>
-                    <a href="mailto:yashborda123@gmail.com">yashborda123@gmail.com</a>
+                    <a href="mailto:yashborda123@gmail.com">kienblock2908@gmail.com
+</a>
                 </div>
             </div>
             <div class="footer-col col-lg-3 col-md-6">

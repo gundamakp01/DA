@@ -36,6 +36,30 @@
                 <div class="error-msg">{{ error.$message }}</div>
             </div>
 
+            <label for="password">Tỉnh/ Thành phố</label>
+            <select class="form-select" v-model="provinceId">
+                <option :value="province.id" v-for="province in provinces">{{ province.name }}</option>
+            </select>
+            <div class="input-errors" v-for="(error, index) of v$.provinceId.$errors" :key="index">
+                <div class="error-msg">{{ error.$message }}</div>
+            </div>
+
+            <label for="password">Quận/ Huyện</label>
+            <select class="form-select" v-model="districtId">
+                <option :value="district.id" v-for="district in districts">{{ district.name }}</option>
+            </select>
+            <div class="input-errors" v-for="(error, index) of v$.districtId.$errors" :key="index">
+                <div class="error-msg">{{ error.$message }}</div>
+            </div>
+
+            <label for="password">Xã/ Phường</label>
+            <select class="form-select" v-model="wardId">
+                <option :value="ward.id" v-for="ward in wards">{{ ward.name }}</option>
+            </select>
+            <div class="input-errors" v-for="(error, index) of v$.wardId.$errors" :key="index">
+                <div class="error-msg">{{ error.$message }}</div>
+            </div>
+
             <button @click="submitForm" type="button">Sign Up</button>
 
             <!-- <div class="row w-100 px-md-3">
@@ -60,7 +84,7 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength, maxLength, helpers } from '@vuelidate/validators'
-import { UserService } from '../services'
+import { UserService, ProvinceService, WardService, DistrictService } from '../services'
 const pass = helpers.regex(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)
 // import { mapState } from 'pinia';
 
@@ -75,7 +99,13 @@ export default {
             confirm_password: '',
             phone_number: '',
             errorCode: '',
-            provider: ''
+            provider: '',
+            provinceId: null,
+            provinces: [],
+            districtId: null,
+            districts: [],
+            wardId: null,
+            wards: []
         }
     },
     validations() {
@@ -101,6 +131,18 @@ export default {
                 required: helpers.withMessage('* Please type Your Phone Number.', required),
                 // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
             },
+            provinceId: {
+                required: helpers.withMessage('* Please select your province.', required),
+                // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
+            },
+            districtId: {
+                required: helpers.withMessage('* Please select your district.', required),
+                // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
+            },
+            wardId: {
+                required: helpers.withMessage('* Please select your ward.', required),
+                // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
+            },
         }
     },
     // computed: {
@@ -112,62 +154,42 @@ export default {
 
             if (isFormCorrect == true) {
                 await UserService.signup({
-                    name: this.name, 
-                    email: this.email, 
-                    password: this.password, 
-                    confirm_password: this.confirm_password, 
+                    name: this.name,
+                    email: this.email,
+                    password: this.password,
+                    confirm_password: this.confirm_password,
                     phone_number: this.phone_number
                 }).then(() => {
                     this.$router.push({ name: 'Home' })
                 })
                 // if (useAuthStore().user) {
-                    
+
                 // }
             }
         },
-        // GoogleSignUp() {
-        //     signInWithPopup(this.auth, this.provider)
-        //         .then((result) => {
-        //             // This gives you a Google Access Token. You can use it to access the Google API.
-        //             GoogleAuthProvider.credentialFromResult(result);
-        //             const user = result.user;
-        //             console.log(user.providerData[0], 'signup with google');
-        //             localStorage.setItem("Userdata", JSON.stringify(user.providerData[0]))
-        //             Toast.fire({
-        //                 icon: "success",
-        //                 title: user.providerData[0].displayName + ", Sign in successfully",
-        //             });
-        //             this.$router.push({ name: 'Home' })
-        //         }).catch((error) => {
-        //             console.log(error, 'error');
-        //         });
-        // },
-        // FacebookSignUp() {
-        //     signInWithPopup(auth, provider)
-        //         .then((result) => {
-        //             // The signed-in user info.
-        //             const user = result.user;
-        //             // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        //             const credential = FacebookAuthProvider.credentialFromResult(result);
-        //             const accessToken = credential.accessToken;
-
-        //             // IdP data available using getAdditionalUserInfo(result)
-        //             // ...
-        //         })
-        //         .catch((error) => {
-        //             // Handle Errors here.
-        //             const errorCode = error.code;
-        //             const errorMessage = error.message;
-        //             // The email of the user's account used.
-        //             const email = error.customData.email;
-        //             // The AuthCredential type that was used.
-        //             const credential = FacebookAuthProvider.credentialFromError(error);
-
-        //             // ...
-        //         });
-        // }
+        async fetchProvices() {
+            const response = await ProvinceService.getProvinces();
+            this.provinces = response.data.data
+        },
+        async fetchDistricts() {
+            const response = await DistrictService.getDistrictByProvince(this.provinceId);
+            this.districts = response.data.data
+        },
+        async fetchWards() {
+            const response = await WardService.getWardByDistrictId(this.districtId);
+            this.wards = response.data.data
+        }
+    },
+    watch: {
+        provinceId: function (val) {
+            this.fetchDistricts();
+        },
+        districtId: function (val) {
+            this.fetchWards();
+        }
     },
     mounted() {
+        this.fetchProvices();
         // if (useAuthStore().isAuthenticated) {
         //     this.$router.push({ name: 'Home' })
         // }
