@@ -84,7 +84,12 @@ class UserController extends Controller
      */
     public function signup(SignUpRequest $request)
     {
-        return $this->userRepository->create($request->only('name', 'email', 'phone_number', 'password'));
+        return $this->userRepository->create($request->only('name', 'email', 'phone_number', 'password','province_id', 'district_id', 'ward_id'));
+    }
+
+    public function editProfile(Request $request)
+    {
+        return $this->userRepository->update($request->only('name', 'phone_number','province_id', 'district_id', 'ward_id'), auth()->id());
     }
 
     public function payment(Request $request) {

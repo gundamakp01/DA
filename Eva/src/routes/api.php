@@ -41,6 +41,7 @@ Route::group([
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
+    Route::put('me', [UserController::class, 'editProfile']);
     Route::apiResource('carts', CartController::class);
     Route::get('carts-order/{id}', [CartController::class, 'getCartByOrderID']);
     Route::post('orders/change-status', [OrderController::class, 'changeStatus']);
