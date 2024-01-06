@@ -4,7 +4,7 @@
             <router-link to="/" aria-current="page">
                 <img src="../assets/img/logo3.png" alt="logo1">
             </router-link>
-            <h1>Sign Up</h1>
+            <h1>Edit Profile</h1>
             <h3 class="input-errors mb-3 text-center">{{ errorCode }}</h3>
             <label for="name">User Name</label>
             <input type="text" v-model="v$.name.$model" id="name" placeholder="User Name">
@@ -13,20 +13,8 @@
             </div>
 
             <label for="email">E-Mail</label>
-            <input type="email" v-model="v$.email.$model" id="email" placeholder="Email Address">
+            <input type="email" v-model="v$.email.$model" readonly id="email" placeholder="Email Address">
             <div class="input-errors" v-for="(error, index) of v$.email.$errors" :key="index">
-                <div class="error-msg">{{ error.$message }}</div>
-            </div>
-
-            <label for="password">Password</label>
-            <input type="text" v-model="v$.password.$model" id="password" placeholder="Password">
-            <div class="input-errors" v-for="(error, index) of v$.password.$errors" :key="index">
-                <div class="error-msg">{{ error.$message }}</div>
-            </div>
-
-            <label for="password">Confirm Password</label>
-            <input type="text" v-model="v$.confirm_password.$model" id="confirm-password" placeholder="Confirm Password">
-            <div class="input-errors" v-for="(error, index) of v$.confirm_password.$errors" :key="index">
                 <div class="error-msg">{{ error.$message }}</div>
             </div>
 
@@ -36,31 +24,31 @@
                 <div class="error-msg">{{ error.$message }}</div>
             </div>
 
-            <label for="password">Tỉnh/ Thành phố</label>
-            <select class="form-select" v-model="provinceId">
+            <label for="provinces">Tỉnh/ Thành phố</label>
+            <select class="form-select" v-model="province_id">
                 <option :value="province.id" v-for="province in provinces">{{ province.name }}</option>
             </select>
-            <div class="input-errors" v-for="(error, index) of v$.provinceId.$errors" :key="index">
+            <div class="input-errors" v-for="(error, index) of v$.province_id.$errors" :key="index">
                 <div class="error-msg">{{ error.$message }}</div>
             </div>
 
             <label for="password">Quận/ Huyện</label>
-            <select class="form-select" v-model="districtId">
+            <select class="form-select" v-model="district_id">
                 <option :value="district.id" v-for="district in districts">{{ district.name }}</option>
             </select>
-            <div class="input-errors" v-for="(error, index) of v$.districtId.$errors" :key="index">
+            <div class="input-errors" v-for="(error, index) of v$.district_id.$errors" :key="index">
                 <div class="error-msg">{{ error.$message }}</div>
             </div>
 
             <label for="password">Xã/ Phường</label>
-            <select class="form-select" v-model="wardId">
+            <select class="form-select" v-model="ward_id">
                 <option :value="ward.id" v-for="ward in wards">{{ ward.name }}</option>
             </select>
-            <div class="input-errors" v-for="(error, index) of v$.wardId.$errors" :key="index">
+            <div class="input-errors" v-for="(error, index) of v$.ward_id.$errors" :key="index">
                 <div class="error-msg">{{ error.$message }}</div>
             </div>
 
-            <button @click="submitForm" type="button">Sign Up</button>
+            <button @click="submitForm" type="button">Submit</button>
 
             <!-- <div class="row w-100 px-md-3">
                 <div class="col-md-6 ps-md-0">
@@ -74,15 +62,13 @@
                     </button>
                 </div>
             </div> -->
-            <router-link to="/login" class="link">
-                <h4>Login</h4>
-            </router-link>
         </div>
     </section>
 </template>
   
 <script>
 import { useVuelidate } from '@vuelidate/core'
+import { userStore } from "@/stores/userStore";
 import { required, email, minLength, maxLength, helpers } from '@vuelidate/validators'
 import { UserService, ProvinceService, WardService, DistrictService } from '../services'
 const pass = helpers.regex(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)
@@ -100,11 +86,11 @@ export default {
             phone_number: '',
             errorCode: '',
             provider: '',
-            provinceId: null,
+            province_id: null,
             provinces: [],
-            districtId: null,
+            district_id: null,
             districts: [],
-            wardId: null,
+            ward_id: null,
             wards: []
         }
     },
@@ -119,27 +105,19 @@ export default {
                 required: helpers.withMessage('* Please type Your Email Address.', required),
                 email
             },
-            password: {
-                required: helpers.withMessage('* Please type Your Password.', required),
-                pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
-            },
-            confirm_password: {
-                required: helpers.withMessage('* Please Confirm Your Password.', required),
-                pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
-            },
             phone_number: {
                 required: helpers.withMessage('* Please type Your Phone Number.', required),
                 // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
             },
-            provinceId: {
+            province_id: {
                 required: helpers.withMessage('* Please select your province.', required),
                 // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
             },
-            districtId: {
+            district_id: {
                 required: helpers.withMessage('* Please select your district.', required),
                 // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
             },
-            wardId: {
+            ward_id: {
                 required: helpers.withMessage('* Please select your ward.', required),
                 // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
             },
@@ -151,17 +129,17 @@ export default {
     methods: {
         async submitForm() {
             const isFormCorrect = await this.v$.$validate()
-
+            
             if (isFormCorrect == true) {
-                await UserService.signup({
+                await UserService.editProfile({
                     name: this.name,
                     email: this.email,
                     password: this.password,
                     confirm_password: this.confirm_password,
                     phone_number: this.phone_number,
-                    province_id: this.provinceId,
-                    district_id: this.districtId,
-                    ward_id: this.wardId,
+                    province_id: this.province_id,
+                    district_id: this.district_id,
+                    ward_id: this.ward_id,
                 }).then(() => {
                     this.$router.push({ name: 'Home' })
                 })
@@ -175,24 +153,36 @@ export default {
             this.provinces = response.data.data
         },
         async fetchDistricts() {
-            const response = await DistrictService.getDistrictByProvince(this.provinceId);
+            const response = await DistrictService.getDistrictByProvince(this.province_id);
             this.districts = response.data.data
         },
         async fetchWards() {
-            const response = await WardService.getWardByDistrictId(this.districtId);
+            const response = await WardService.getWardByDistrictId(this.district_id);
             this.wards = response.data.data
+        },
+        async fetchUser()
+        {
+            const response = await UserService.getUserById(userStore().user.id);
+            const user = response.data.data;
+            this.name = user.name
+            this.email = user.email
+            this.phone_number = user.phone_number
+            this.province_id = user.province_id
+            this.district_id = user.district_id
+            this.ward_id = user.ward_id
         }
     },
     watch: {
-        provinceId: function (val) {
+        province_id: function (val) {
             this.fetchDistricts();
         },
-        districtId: function (val) {
+        district_id: function (val) {
             this.fetchWards();
         }
     },
     mounted() {
         this.fetchProvices();
+        this.fetchUser();
         // if (useAuthStore().isAuthenticated) {
         //     this.$router.push({ name: 'Home' })
         // }

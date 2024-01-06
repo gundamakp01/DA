@@ -18,6 +18,9 @@ const UserService  = {
     signup(data) {
         return ApiService.post(`users/signup`, data)
     },
+    editProfile(data) {
+        return ApiService.update(`me`, data)
+    },
     payment(id) {
         return ApiService.get(`users/vnpay-payment/${id}`)
     }
