@@ -26,6 +26,16 @@ const routes = [
     name: 'signup',
     component: () => import("../views/SignUp.vue"),
   },
+  {
+    path: '/contact-us',
+    name: 'contactUs',
+    component: () => import("../views/ContactUs.vue"),
+  },
+  {
+    path: '/edit-profile',
+    name: 'editProfile',
+    component: () => import("../views/EditProfile.vue"),
+  },
   // {
   //   path: '/login-with-phone',
   //   name: 'LoginWithPhone',

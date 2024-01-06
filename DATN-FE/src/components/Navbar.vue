@@ -113,6 +113,7 @@
                             </button>
                             <ul class="dropdown-menu p-0" style="cursor: pointer;">
                                 <li><a class="dropdown-item" @click="Logout">Log Out</a></li>
+                                <li><a class="dropdown-item" @click="editProfile">Edit Profile</a></li>
                             </ul>
                         </div>
                     </li>
@@ -143,6 +144,10 @@ export default {
             userStore().user = null;
             this.$router.push('/login');
         },
+        async editProfile()
+        {
+            this.$router.push('/edit-profile');
+        }
     }
 }
 </script>
