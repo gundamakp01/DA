@@ -23,7 +23,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $products = $this->productRepository->paginate(24);
         return $this->responseOk(new ProductPaginationCollection($products));
@@ -97,7 +97,7 @@ class ProductController extends Controller
     {
         $category = $this->categoryRepository->getDescendantsAndSelf($categoryId);
         $categoryIds = $category->pluck('id');
-        $products = $this->productRepository->getProductByCategoryIds($categoryIds, $request->all());
+        $products = $this->productRepository->getProductByCategoryIds($categoryIds, $request->search);
         return $this->responseOk(new ProductPaginationCollection($products));
     }
 }
