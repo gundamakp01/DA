@@ -2,7 +2,7 @@
   <section id="login">
     <div class="container">
       <router-link to="/" aria-current="page">
-        <img src="../assets/img/logo3.png" alt="logo">
+        <img src="../assets/img/logo.png" alt="logo">
       </router-link>
       <h1>Login</h1>
       <label for="email">E-Mail</label>
@@ -76,3 +76,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+img {
+  width: 220px !important;
+  height: auto;
+}
+</style>

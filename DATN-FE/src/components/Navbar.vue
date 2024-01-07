@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg fixed-top bg-light">
         <div class="container">
             <router-link to="/" class="navbar-brand py-2" aria-current="page">
-                <img src="../assets/img/logo1.png" alt="logo1">
+                <img src="../assets/img/logo.png" alt="logo1" width="220">
             </router-link>
             <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"

@@ -2,7 +2,7 @@
     <section id="signup">
         <div class="container">
             <router-link to="/" aria-current="page">
-                <img src="../assets/img/logo3.png" alt="logo1">
+                <img src="../assets/img/logo.png" alt="logo1">
             </router-link>
             <h1>Sign Up</h1>
             <h3 class="input-errors mb-3 text-center">{{ errorCode }}</h3>
@@ -201,6 +201,10 @@ export default {
 }
 </script>
 <style scoped lang="css">
+img {
+    width: 220px !important;
+    height: auto;
+}
 .form-select {
     padding: 10px 20px;
     margin: 15px auto;
