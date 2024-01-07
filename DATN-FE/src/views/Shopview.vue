@@ -6,14 +6,7 @@
                 <h3>{{ category.name }}</h3>
                 <div class="filter-inner">
                     <div class="filter-head">
-                        <p>Bộ lọc:</p>
-                        <a name="button-close" class=" btn-filter-close d-sm-block d-lg-none">
-                            <svg viewBox="0 0 19 19" role="presentation">
-                                <path
-                                    d="M9.1923882 8.39339828l7.7781745-7.7781746 1.4142136 1.41421357-7.7781746 7.77817459 7.7781746 7.77817456L16.9705627 19l-7.7781745-7.7781746L1.41421356 19 0 17.5857864l7.7781746-7.77817456L0 2.02943725 1.41421356.61522369 9.1923882 8.39339828z"
-                                    fill-rule="evenodd"></path>
-                            </svg>
-                        </a>
+                        <p class="mb-none">Bộ lọc:</p>
                     </div>
                     <div class="filter-options">
                         <!-- ./filter sortby -->
@@ -30,31 +23,31 @@
                                     <ul class="checkbox-list">
                                         <li>
                                             <input type="checkbox" id="data-brand-p1" value="Khác" name="brand-filter"
-                                                data-vendor="(vendor:product contains Khác)" v-model="search.brands">
+                                                v-model="search.brands">
                                             <label for="data-brand-p1">Khác</label>
                                         </li>
 
                                         <li>
-                                            <input type="checkbox" id="data-brand-p2" value="Eva" name="brand-filter"
-                                                data-vendor="(vendor:product contains Eva)" v-model="search.brands">
-                                            <label for="data-brand-p2">Eva</label>
+                                            <input type="checkbox" id="data-brand-p2" value="Homewear" name="brand-filter"
+                                                v-model="search.brands">
+                                            <label for="data-brand-p2">Homewear</label>
                                         </li>
 
                                         <li>
                                             <input type="checkbox" id="data-brand-p3" value="Eva De Eva" name="brand-filter"
-                                                data-vendor="(vendor:product contains Eva De Eva)" v-model="search.brands">
+                                                v-model="search.brands">
                                             <label for="data-brand-p3">Eva De Eva</label>
                                         </li>
 
                                         <li>
                                             <input type="checkbox" id="data-brand-p4" value="Lady me" name="brand-filter"
-                                                data-vendor="(vendor:product contains Lady me)" v-model="search.brands">
+                                                v-model="search.brands">
                                             <label for="data-brand-p4">Lady me</label>
                                         </li>
 
                                         <li>
                                             <input type="checkbox" id="data-brand-p5" value="Unique" name="brand-filter"
-                                                data-vendor="(vendor:product contains Unique)" v-model="search.brands">
+                                                v-model="search.brands">
                                             <label for="data-brand-p5">Unique</label>
                                         </li>
 
@@ -119,11 +112,11 @@
                                 </div>
                                 <div :class="`filter_group-content filter-price ${isShow === 3 ? 'd-block' : 'd-none'}`"
                                     @mouseover="isShow = 3" @mouseleave="isShow = 0">
-                                    <label for="customRange1" class="form-label">Example range</label>
+                                    <label for="customRange1" class="form-label">Khoảng giá</label>
                                     <input type="range" v-model="search.price" min="0" max="3000000" step="10000"
                                         class="form-range" id="customRange1">
                                     <div class="filter-price__value">
-                                        <div id="smooth-steps-values">0đ - 3,000,000đ</div>
+                                        <div id="smooth-steps-values">{{ priceFormat }}đ - 3,000,000đ</div>
                                     </div>
                                 </div>
                             </div>
@@ -134,31 +127,23 @@
                         <div class="filter_group">
                             <div class="filter_group_block">
                                 <div class="filter_group-subtitle" @mouseover="isShow = 4" @mouseleave="isShow = 0">
-                                    <span>Theo dịp</span>
+                                    <span>Giảm giá</span>
                                 </div>
                                 <div :class="`filter_group-content filter-event ${isShow === 4 ? 'd-block' : 'd-none'}`"
                                     @mouseover="isShow = 4" @mouseleave="isShow = 0">
 
                                     <ul class="checkbox-list">
-
                                         <li>
-                                            <input type="checkbox" id="data-event-p1" value="Đi làm" name="event-filter"
-                                                data-event="(tag:product=Đi làm)">
-                                            <label for="data-event-p1">Đi làm</label>
+                                            <input type="radio" id="data-discount-p1" value="50" name="discount-filter"
+                                                v-model="search.discount">
+                                            <label for="data-discount-p1">0 - 50%</label>
                                         </li>
 
                                         <li>
-                                            <input type="checkbox" id="data-event-p2" value="Đi chơi" name="event-filter"
-                                                data-event="(tag:product=Đi chơi)">
-                                            <label for="data-event-p2">Đi chơi</label>
+                                            <input type="radio" id="data-discount-p2" value="70" name="discount-filter"
+                                                v-model="search.discount">
+                                            <label for="data-discount-p2">50 - 70%</label>
                                         </li>
-
-                                        <li>
-                                            <input type="checkbox" id="data-event-p3" value="Đi tiệc" name="event-filter"
-                                                data-event="(tag:product=Đi tiệc)">
-                                            <label for="data-event-p3">Đi tiệc</label>
-                                        </li>
-
                                     </ul>
                                 </div>
                             </div>
@@ -215,7 +200,7 @@ export default {
                 brands: [],
                 size: [],
                 price: 0,
-                events: [],
+                discount: null,
             },
 
             isShow: 0
@@ -224,8 +209,15 @@ export default {
     },
     methods: {
         fetchProduct: debounce(async function () {
-            const resp = await ProductService.getProductByCategoryId(this.category_id, { 
-                page: this.page, brands: this.search.brands, size: this.search.size, price: this.search.price, events: this.search.events 
+            const brandsString = this.search.brands.join(',');
+            const sizeString = this.search.size.join(',');
+            const resp = await ProductService.getProductByCategoryId(this.category_id, {
+                page: this.page,
+                search: {
+                    ...this.search,
+                    brands: brandsString.length ? brandsString : null,
+                    size: sizeString.length ? sizeString : null,
+                }
             });
             if (resp) {
                 this.products = [
@@ -247,6 +239,11 @@ export default {
                 this.category = resp.data.data;
             }
         }
+    },
+    computed: {
+        priceFormat() {
+            return new Intl.NumberFormat().format(this.search.price)
+        },
     },
     created() {
         this.fetchProduct();
@@ -274,6 +271,7 @@ export default {
         },
         search: {
             handler: function (val) {
+                this.products = [];
                 this.fetchProduct();
             },
             deep: true
@@ -284,6 +282,10 @@ export default {
 }
 </script>
 <style lang="css">
+.mb-none {
+    margin-bottom: 0;
+}
+
 .menuCollection {
     display: flex;
     margin: 0 0 30px 0;
@@ -417,5 +419,6 @@ span {
 .filter-inner {
     display: flex;
     align-items: center;
-}</style>
+}
+</style>
 
