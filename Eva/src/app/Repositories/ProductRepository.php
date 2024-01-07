@@ -18,10 +18,31 @@ class ProductRepository extends BaseRepository
     {
         return $this->model->whereIn('category_id', $categoryIds)
             ->when(array_key_exists('brands', $params), function ($query) use ($params) {
-                $query->whereIn('vendor', $params['brands']);
+                $brands = explode(',', $params['brands']);
+                $query->whereIn('vendor', $brands);
             })->when(array_key_exists('price', $params), function ($query) use ($params) {
                 $query->where('price', '>', $params['price']);
             })->when(array_key_exists('size', $params), function ($query) use ($params) {
+                $size = explode(',', $params['size']);
+                if (in_array('S', $size)) {
+                    $query->where('size_s',  '>', 0);
+                }
+                if (in_array('M', $size)) {
+                    $query->where('size_m',  '>', 0);
+                }
+                if (in_array('L', $size)) {
+                    $query->where('size_l',  '>', 0);
+                }
+                if (in_array('XL', $size)) {
+                    $query->where('size_xl',  '>', 0);
+                }
+            })->when(array_key_exists('discount', $params), function ($query) use ($params) {
+                if ($params['discount'] == 50) {
+                    $query->where('discount',  '>', 0)->where('discount', '<=', 50);
+                }
+                if ($params['discount'] == 70) {
+                    $query->where('discount',  '<=', 70)->where('discount', '>', 50);
+                }
             })->paginate(24);
     }
 }
