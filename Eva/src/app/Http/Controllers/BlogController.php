@@ -82,7 +82,6 @@ class BlogController extends Controller
                     'imageable_id' => $blog->id
                 ]);
         }
-        info('ccccccc');
         return $this->blogRepository->update($request->only('name', 'description', 'content'), $blog->id);
     }
 

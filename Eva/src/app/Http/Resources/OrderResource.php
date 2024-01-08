@@ -14,7 +14,6 @@ class OrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        info($this->payment);
         return [
             'id' => $this->id,
             'user' => new LiteUserResource($this->user),

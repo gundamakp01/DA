@@ -81,4 +81,9 @@ class OrderRepository extends BaseRepository
             ->join('carts', 'carts.order_id', '=', 'orders.id')
             ->value('total_price');
     }
+
+    public function findWithSum($order_id)
+    {
+        return $this->model->withSum('carts', 'price')->find($order_id);
+    }
 }

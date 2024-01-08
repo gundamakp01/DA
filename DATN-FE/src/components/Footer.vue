@@ -60,7 +60,7 @@
                     <img src="../assets/img/payment.png" alt="">
                 </div>
                 <div class="col-md-6 col-lg-4 ">
-                    <p>Copyright © 2022 <a class="text-white" target="_blank" href="https://webdev531.000webhostapp.com/">YASH BORDA</a>. Vue JS Developer.</p>
+                    <p>Copyright © 2024 <a class="text-white" target="_blank" href="https://webdev531.000webhostapp.com/">Kiên Nguyễn</a>. Vue JS Developer.</p>
                 </div>
                 <div class="col-md-6 col-lg-4 text-lg-center copyright">
                     <a href="https://www.linkedin.com/in/yash-borda-8abb9124b/">

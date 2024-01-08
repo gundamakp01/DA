@@ -7,6 +7,7 @@ use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\Order;
 use App\Models\Payment;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\OrderRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -67,7 +68,6 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $user = $this->userRepository->findOrFail($id);
-        info($request['phone_number']);
         return $this->userRepository->update($request->only('name', 'email', 'phone_number', 'address'), $user->id);
     }
 
@@ -93,16 +93,16 @@ class UserController extends Controller
     }
 
     public function payment(Request $request) {
-        $order = $this->orderRepository->find($request->id);
+        $order = $this->orderRepository->findWithSum($request->id);
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:5173/done";
-        $vnp_TmnCode = "G6N42BNE";//Mã website tại VNPAY
-        $vnp_HashSecret = "MUMWAYJLYWUVXIAARRBYYMJKOVKXQOSA"; //Chuỗi bí mật
+        $vnp_Returnurl = "http://localhost:5173";
+        $vnp_TmnCode = "24UAIXK5";//Mã website tại VNPAY
+        $vnp_HashSecret = "QPMYIBZROQSBGDVXUSMHFRIHRELGSZNW"; //Chuỗi bí mật
 
         $vnp_TxnRef = $order->id;
         $vnp_OrderInfo = 'Thanh toán đơn hàng';
         $vnp_OrderType = 'billpayment';
-        $vnp_Amount = $order->withSum('carts', 'price')->value('carts_sum_price');
+        $vnp_Amount = $order->carts_sum_price * 100 + 35000;
         $vnp_Locale = 'vn';
         $vnp_BankCode = "NCB";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
