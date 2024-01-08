@@ -105,11 +105,6 @@
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</p>
             </div>
             <div class="m-2">
-              <select v-model="selected">
-                <option v-for="option in options" :value="option.value">
-                  {{ option.text }}
-                </option>
-              </select>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="flexRadioDefault" v-model="paymentMethod" value="1"
                   id="flexRadioDefault1">
@@ -151,7 +146,6 @@ export default {
     return {
       carts: [],
       paymentMethod: 1,
-      provinces: [],
     };
   },
   methods: {
@@ -161,25 +155,10 @@ export default {
         this.carts = resp.data.data;
       }
     },
-    async fetchProvices() {
-      const resp = await axios.get('https://provinces.open-api.vn/api/p/', {
-        headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
-    }
-      });
-      if (resp) {
-        this.provinces = resp;
-      }
-      console.log(this.provinces)
-    },
     formatPrice(cart) {
       return cart?.discount
-        ? Math.floor(
-          (Number(cart?.price.replace(/,/g, "")) * (100 - cart?.discount)) /
-          100 /
-          1000
-        ) * 1000
+        ? 
+        (Number(cart?.price.replace(/,/g, "")) * (100 - cart?.discount)) / 100 
         : Number(cart?.price.replace(/,/g, ""));
     },
     async removeCart(id) {
@@ -224,7 +203,6 @@ export default {
   },
   async created() {
     await this.fetchCarts();
-    await this.fetchProvices();
   },
   computed: {
     // a computed getter
