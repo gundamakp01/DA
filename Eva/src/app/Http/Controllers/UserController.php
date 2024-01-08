@@ -102,7 +102,7 @@ class UserController extends Controller
         $vnp_TxnRef = $order->id;
         $vnp_OrderInfo = 'Thanh toán đơn hàng';
         $vnp_OrderType = 'billpayment';
-        $vnp_Amount = $order->carts_sum_price * 100 + 35000;
+        $vnp_Amount = $order->total_amount * 100 + 35000;
         $vnp_Locale = 'vn';
         $vnp_BankCode = "NCB";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
