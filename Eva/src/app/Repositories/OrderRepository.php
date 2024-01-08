@@ -84,7 +84,7 @@ class OrderRepository extends BaseRepository
 
     public function findWithSum($order_id)
     {
-        return Order::selectRaw('orders.*, SUM((carts.price * (carts.discount / 100)) * carts.quantity) as total_amount')
+        return Order::selectRaw('orders.*, SUM((carts.price * ((100 - carts.discount) / 100)) * carts.quantity) as total_amount')
         ->join('carts', 'orders.id', '=', 'carts.order_id')
         ->where('orders.id', $order_id)
         ->groupBy('orders.id')
