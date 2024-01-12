@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Kjmtrue\VietnamZone\Models\District;
+use Kjmtrue\VietnamZone\Models\Province;
+use Kjmtrue\VietnamZone\Models\Ward;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -83,5 +86,20 @@ class User extends Authenticatable implements JWTSubject
     public function wishlists()
     {
         return $this->hasMany(Wishlist::class);
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function ward()
+    {
+        return $this->belongsTo(Ward::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
     }
 }
