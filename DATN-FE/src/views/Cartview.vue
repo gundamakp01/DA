@@ -84,15 +84,136 @@
               <Button class="me-3" :button_text="'Apply_coupon'" />
             </div>
           </div>
+          <div class="d-flex flex-column">
+            <input
+              type="text"
+              v-model="v$.name.$model"
+              id="name"
+              placeholder="User Name"
+            />
+            <div
+              class="input-errors"
+              v-for="(error, index) of v$.name.$errors"
+              :key="index"
+            >
+              <div class="error-msg">{{ error.$message }}</div>
+            </div>
+
+            <label for="email">E-Mail</label>
+            <input
+              type="email"
+              v-model="v$.email.$model"
+              id="email"
+              placeholder="Email Address"
+            />
+            <div
+              class="input-errors"
+              v-for="(error, index) of v$.email.$errors"
+              :key="index"
+            >
+              <div class="error-msg">{{ error.$message }}</div>
+            </div>
+
+            <label for="password">Password</label>
+            <input
+              type="text"
+              v-model="v$.password.$model"
+              id="password"
+              placeholder="Password"
+            />
+            <div
+              class="input-errors"
+              v-for="(error, index) of v$.password.$errors"
+              :key="index"
+            >
+              <div class="error-msg">{{ error.$message }}</div>
+            </div>
+
+            <label for="password">Confirm Password</label>
+            <input
+              type="text"
+              v-model="v$.confirm_password.$model"
+              id="confirm-password"
+              placeholder="Confirm Password"
+            />
+            <div
+              class="input-errors"
+              v-for="(error, index) of v$.confirm_password.$errors"
+              :key="index"
+            >
+              <div class="error-msg">{{ error.$message }}</div>
+            </div>
+
+            <label for="password">Phone Number</label>
+            <input
+              type="text"
+              v-model="v$.phone_number.$model"
+              id="phone-number"
+              placeholder="Phone Number"
+            />
+            <div
+              class="input-errors"
+              v-for="(error, index) of v$.phone_number.$errors"
+              :key="index"
+            >
+              <div class="error-msg">{{ error.$message }}</div>
+            </div>
+
+            <label for="password">Tỉnh/ Thành phố</label>
+            <select class="form-select" v-model="provinceId">
+              <option :value="province.id" v-for="province in provinces">
+                {{ province.name }}
+              </option>
+            </select>
+            <div
+              class="input-errors"
+              v-for="(error, index) of v$.provinceId.$errors"
+              :key="index"
+            >
+              <div class="error-msg">{{ error.$message }}</div>
+            </div>
+
+            <label for="password">Quận/ Huyện</label>
+            <select class="form-select" v-model="districtId">
+              <option :value="district.id" v-for="district in districts">
+                {{ district.name }}
+              </option>
+            </select>
+            <div
+              class="input-errors"
+              v-for="(error, index) of v$.districtId.$errors"
+              :key="index"
+            >
+              <div class="error-msg">{{ error.$message }}</div>
+            </div>
+
+            <label for="password">Xã/ Phường</label>
+            <select class="form-select" v-model="wardId">
+              <option :value="ward.id" v-for="ward in wards">
+                {{ ward.name }}
+              </option>
+            </select>
+            <div
+              class="input-errors"
+              v-for="(error, index) of v$.wardId.$errors"
+              :key="index"
+            >
+              <div class="error-msg">{{ error.$message }}</div>
+            </div>
+          </div>
+
+          <button @click="submitForm" type="button">Sign Up</button>
         </div>
         <div class="total col-md-6 col-12 mb-4">
           <div>
             <h5>CART TOTAL</h5>
             <div class="d-flex justify-content-between">
               <h6>Subtotal</h6>
-              <p>{{ totalPrice
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</p>
+              <p>
+                {{
+                  totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }}
+              </p>
             </div>
             <div class="d-flex justify-content-between">
               <h6>Shipping</h6>
@@ -101,27 +222,48 @@
             <hr class="second-hr" />
             <div class="d-flex justify-content-between">
               <h6>Total</h6>
-              <p>{{ (totalPrice + 35000).toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</p>
+              <p>
+                {{
+                  (totalPrice + 35000)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }}
+              </p>
             </div>
             <div class="m-2">
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" v-model="paymentMethod" value="1"
-                  id="flexRadioDefault1">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  v-model="paymentMethod"
+                  value="1"
+                  id="flexRadioDefault1"
+                />
                 <label class="form-check-label" for="flexRadioDefault1">
                   Tiền mặt
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" v-model="paymentMethod" value="2"
-                  id="flexRadioDefault2">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  v-model="paymentMethod"
+                  value="2"
+                  id="flexRadioDefault2"
+                />
                 <label class="form-check-label" for="flexRadioDefault2">
                   Thanh toán VNPay
                 </label>
               </div>
             </div>
             <div class="d-flex justify-content-end">
-              <Button class="me-3" :button_text="'process_to_checkout'" @click="order" />
+              <Button
+                class="me-3"
+                :button_text="'process_to_checkout'"
+                @click="order"
+              />
             </div>
           </div>
         </div>
@@ -138,14 +280,100 @@ import Footer from "@/components/Footer.vue";
 import { useToast } from "vue-toastification";
 import { CartService, OrderService } from "../services";
 import { UserService } from "@/services";
-import axios from "axios";
+import { useVuelidate } from "@vuelidate/core";
+import {
+  required,
+  email,
+  minLength,
+  maxLength,
+  helpers,
+} from "@vuelidate/validators";
+import { ProvinceService, WardService, DistrictService } from "../services";
+const pass = helpers.regex(
+  /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/
+);
 export default {
   name: "Cartview",
   components: { Button, Navbar, Footer },
+  setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
+      name: "",
+      email: "",
+      password: "",
+      confirm_password: "",
+      phone_number: "",
+      errorCode: "",
+      provider: "",
       carts: [],
       paymentMethod: 1,
+      provinceId: null,
+      provinces: [],
+      districtId: null,
+      districts: [],
+      wardId: null,
+      wards: [],
+    };
+  },
+  validations() {
+    return {
+      name: {
+        required: helpers.withMessage(
+          "* Please type Your User Name.",
+          required
+        ),
+        minLength: minLength(3),
+        maxLength: maxLength(20),
+      },
+      email: {
+        required: helpers.withMessage(
+          "* Please type Your Email Address.",
+          required
+        ),
+        email,
+      },
+      password: {
+        required: helpers.withMessage("* Please type Your Password.", required),
+        pass: helpers.withMessage(
+          "* Must contain at least one number and one uppercase and lowercase letter required.",
+          pass
+        ),
+      },
+      confirm_password: {
+        required: helpers.withMessage(
+          "* Please Confirm Your Password.",
+          required
+        ),
+        pass: helpers.withMessage(
+          "* Must contain at least one number and one uppercase and lowercase letter required.",
+          pass
+        ),
+      },
+      phone_number: {
+        required: helpers.withMessage(
+          "* Please type Your Phone Number.",
+          required
+        ),
+        // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
+      },
+      provinceId: {
+        required: helpers.withMessage(
+          "* Please select your province.",
+          required
+        ),
+        // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
+      },
+      districtId: {
+        required: helpers.withMessage(
+          "* Please select your district.",
+          required
+        ),
+        // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
+      },
+      wardId: {
+        required: helpers.withMessage("* Please select your ward.", required),
+        // pass: helpers.withMessage('* Must contain at least one number and one uppercase and lowercase letter required.', pass)
+      },
     };
   },
   methods: {
@@ -157,8 +385,7 @@ export default {
     },
     formatPrice(cart) {
       return cart?.discount
-        ? 
-        (Number(cart?.price.replace(/,/g, "")) * (100 - cart?.discount)) / 100 
+        ? (Number(cart?.price.replace(/,/g, "")) * (100 - cart?.discount)) / 100
         : Number(cart?.price.replace(/,/g, ""));
     },
     async removeCart(id) {
@@ -178,7 +405,7 @@ export default {
     getTotalPrice() {
       var count = 0;
       for (let i = 1; i <= this.carts.length; i++) {
-        console.log(this.formatPrice(this.carts[i]))
+        console.log(this.formatPrice(this.carts[i]));
         count += this.formatPrice(this.carts[i]?.price);
       }
       return count;
@@ -191,15 +418,37 @@ export default {
           timeout: 2000,
         });
         if (this.paymentMethod == 1) {
-          this.$router.push('/')
+          this.$router.push("/");
         } else {
           const payment = await UserService.payment(order?.data?.data?.id);
           if (payment) {
-            window.location.href = payment.data.data
+            window.location.href = payment.data.data;
           }
         }
       }
-    }
+    },
+    async fetchProvices() {
+      const response = await ProvinceService.getProvinces();
+      this.provinces = response.data.data;
+    },
+    async fetchDistricts() {
+      const response = await DistrictService.getDistrictByProvince(
+        this.provinceId
+      );
+      this.districts = response.data.data;
+    },
+    async fetchWards() {
+      const response = await WardService.getWardByDistrictId(this.districtId);
+      this.wards = response.data.data;
+    },
+  },
+  watch: {
+    provinceId: function (val) {
+      this.fetchDistricts();
+    },
+    districtId: function (val) {
+      this.fetchWards();
+    },
   },
   async created() {
     await this.fetchCarts();
