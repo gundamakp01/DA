@@ -22,7 +22,7 @@
           <option v-for="status in statuses" :value="status.value">{{ status.text }}</option>
         </select>
       </td>
-      <td>{{ order.address }}</td>
+      <td>{{ customerAddress(order) }}</td>
       <td>{{ order.payment?.payment_method_text }}</td>
       <td>{{ order.order_date }}</td>
       <td>
@@ -166,7 +166,24 @@ export default {
       if (resp) {
         $toast.success('Thay đổi trạng thái thành công!')
       }
-    }
+    },
+    customerAddress(order) {
+      // `this` points to the vm instance
+      let address = "";
+      if (order?.address?.address) {
+        address += order?.address?.address + ", ";
+      }
+      if (order?.address?.ward) {
+        address += order?.address?.ward + ", ";
+      }
+      if (order?.address?.district) {
+        address += order?.address?.district + ", ";
+      }
+      if (order?.address?.province) {
+        address += order?.address?.province;
+      }
+      return address;
+    },
   }
 }
 
