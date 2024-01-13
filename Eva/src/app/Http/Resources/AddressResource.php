@@ -20,9 +20,9 @@ class AddressResource extends JsonResource
             'email' => $this->email,
             'phone_number' => $this->phone_number,
             'address' => $this->address,
-            'city' => $this->city,
-            'district' => $this->district,
-            'ward' => $this->ward,
+            'province' => $this->yourProvince->name ?? null,
+            'district' => $this->yourDistrict->name ?? null,
+            'ward' => $this->yourWard->name ?? null,
         ];
     }
 }

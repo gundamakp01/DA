@@ -6,6 +6,7 @@ use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductDetailResource;
 use App\Models\User;
+use App\Repositories\AddressRepository;
 use App\Repositories\CartRepository;
 use App\Repositories\OrderRepository;
 use Illuminate\Http\Request;
@@ -14,10 +15,16 @@ class OrderController extends Controller
 {
     protected $orderRepository;
     protected $cartRepository;
-    public function __construct(OrderRepository $orderRepository, CartRepository $cartRepository)
+    protected $addressRepository;
+    public function __construct(
+        OrderRepository $orderRepository, 
+        CartRepository $cartRepository, 
+        AddressRepository $addressRepository
+    )
     {
         $this->orderRepository = $orderRepository;
         $this->cartRepository = $cartRepository;
+        $this->addressRepository = $addressRepository;
     }
     /**
      * Display a listing of the resource.
@@ -46,12 +53,14 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $address = $this->addressRepository->create($request->address);
         $order = $this->orderRepository->create([
             'user_id' => auth()->id(),
             'voucher_id' => $request->voucher_id ?? null,
-            'address_id' => $request->address_id ?? null,
+            'address_id' => $address->id ?? null,
         ]);
         $this->cartRepository->changeStatusCartByUser(auth()->id(), $order->id);
+
         $order->payment()->create([
             'payment_method' => 1,
             'payment_date' => now()

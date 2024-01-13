@@ -20,7 +20,7 @@ class OrderResource extends JsonResource
             'order_date' => $this->order_date,
             'status' => $this->status,
             'status_text' => $this->order_status_text,
-            'address_id' => new AddressResource($this->address),
+            'address' => new AddressResource($this->address),
             'voucher_id' => new VoucherResource($this->voucher),
             'payment' => new PaymentResource($this->payment)
         ];
