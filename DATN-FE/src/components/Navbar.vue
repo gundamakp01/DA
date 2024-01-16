@@ -94,13 +94,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/login" class="nav-link " aria-current="page" v-if="user?.name == '' || user?.name">
-                            <button class="button_1 px-3" type="button">
-                                <i class="fa fa-user me-2"></i>
-                                Login
-                            </button>
-                        </router-link>
-                        <div class="dropdown" v-else>
+                        <div class="dropdown" v-if="user?.id">
                             <button class="btn button_1 dropdown-toggle d-flex justify-content-between align-items-center"
                                 type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="d-inline" v-if="!photo">
@@ -116,6 +110,12 @@
                                 <li><a class="dropdown-item" @click="editProfile">Edit Profile</a></li>
                             </ul>
                         </div>
+                        <router-link to="/login" class="nav-link " aria-current="page" v-else>
+                            <button class="button_1 px-3" type="button">
+                                <i class="fa fa-user me-2"></i>
+                                Login
+                            </button>
+                        </router-link>
                     </li>
                 </ul>
             </div>
