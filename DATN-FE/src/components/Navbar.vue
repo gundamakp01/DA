@@ -94,7 +94,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/login" class="nav-link " aria-current="page" v-if="!user">
+                        <router-link to="/login" class="nav-link " aria-current="page" v-if="user?.name == '' || user?.name">
                             <button class="button_1 px-3" type="button">
                                 <i class="fa fa-user me-2"></i>
                                 Login
