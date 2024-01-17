@@ -1,0 +1,1 @@
+import{A as t}from"./index.8679afdc.js";const g={getBlog(){return t.get("blogs")},createBlog(e){return t.post("blogs",e,{headers:{"Content-Type":"multipart/form-data"}})},deleteBlog(e){return t.delete(`blogs/${e}`)},updateBlog(e,r){return t.post(`blogs/${e}`,r,{headers:{"Content-Type":"multipart/form-data"}})},getBlogById(e){return t.get(`blogs/${e}`)}};export{g as B};
