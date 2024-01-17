@@ -16,7 +16,7 @@ const ProductService  = {
     return ApiService.get(`products/${id}`)
   },
   getProductByCategoryId(id, params) {
-    return ApiService.get(`categories/${id}/products`, params)
+    return ApiService.post(`categories/${id}/products`, params)
   }
 }
 export default ProductService
