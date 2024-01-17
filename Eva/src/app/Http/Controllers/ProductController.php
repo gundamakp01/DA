@@ -93,7 +93,7 @@ class ProductController extends Controller
         return $this->productRepository->delete($id);
     }
 
-    public function getProductByCategoryId($categoryId, Request $request)
+    public function getProductByCategoryId(Request $request, $categoryId)
     {
         $category = $this->categoryRepository->getDescendantsAndSelf($categoryId);
         $categoryIds = $category->pluck('id');
