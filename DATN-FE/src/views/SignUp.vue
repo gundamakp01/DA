@@ -19,24 +19,24 @@
             </div>
 
             <label for="password">Password</label>
-            <input type="text" v-model="v$.password.$model" id="password" placeholder="Password">
+            <input type="password" v-model="v$.password.$model" id="password" placeholder="Password">
             <div class="input-errors" v-for="(error, index) of v$.password.$errors" :key="index">
                 <div class="error-msg">{{ error.$message }}</div>
             </div>
 
-            <label for="password">Confirm Password</label>
-            <input type="text" v-model="v$.confirm_password.$model" id="confirm-password" placeholder="Confirm Password">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" v-model="v$.confirm_password.$model" id="confirm-password" placeholder="Confirm Password">
             <div class="input-errors" v-for="(error, index) of v$.confirm_password.$errors" :key="index">
                 <div class="error-msg">{{ error.$message }}</div>
             </div>
 
-            <label for="password">Phone Number</label>
+            <label for="phone-number">Phone Number</label>
             <input type="text" v-model="v$.phone_number.$model" id="phone-number" placeholder="Phone Number">
             <div class="input-errors" v-for="(error, index) of v$.phone_number.$errors" :key="index">
                 <div class="error-msg">{{ error.$message }}</div>
             </div>
 
-            <label for="password">Tỉnh/ Thành phố</label>
+            <label for="province">Tỉnh/ Thành phố</label>
             <select class="form-select" v-model="provinceId">
                 <option :value="province.id" v-for="province in provinces">{{ province.name }}</option>
             </select>
@@ -44,7 +44,7 @@
                 <div class="error-msg">{{ error.$message }}</div>
             </div>
 
-            <label for="password">Quận/ Huyện</label>
+            <label for="district">Quận/ Huyện</label>
             <select class="form-select" v-model="districtId">
                 <option :value="district.id" v-for="district in districts">{{ district.name }}</option>
             </select>
@@ -52,7 +52,7 @@
                 <div class="error-msg">{{ error.$message }}</div>
             </div>
 
-            <label for="password">Xã/ Phường</label>
+            <label for="ward">Xã/ Phường</label>
             <select class="form-select" v-model="wardId">
                 <option :value="ward.id" v-for="ward in wards">{{ ward.name }}</option>
             </select>

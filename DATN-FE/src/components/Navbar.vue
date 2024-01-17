@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg fixed-top bg-light">
         <div class="container">
             <router-link to="/" class="navbar-brand py-2" aria-current="page">
-                <img src="../assets/img/logo.png" alt="logo1" width="220">
+                <img src="../assets/logonew1xoaphong.png" alt="logo1" width="220">
             </router-link>
             <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -30,47 +30,11 @@
                         <div :class="`menuList-submain multicolumn ${upHere ? 'menu-visible' : 'menu-hidden'}`"
                             @mouseover="upHere = true" @mouseleave="upHere = false">
                             <div class="multicolumn-container-new">
-                                <router-link class="itemMegaMenu" to="/categories/1">
-                                    <img src="https://file.hstatic.net/200000000133/file/img_megamenu2_1_e08027b8bd954f039a301b77529755d0.jpg"
+                                <router-link v-for="category in categories" class="itemMegaMenu" :to="`/categories/${category.id}`">
+                                    <img :src="category.image?.url"
                                         alt="Đầm" height="230" width="230">
-                                    <div>Đầm</div>
+                                    <div>{{ category.name }}</div>
                                 </router-link>
-                                <router-link class="itemMegaMenu" to="/categories/2">
-                                    <img src="https://file.hstatic.net/200000000133/file/img_megamenu2_2_824442ddf1654c21afd54489b4ba122b.jpg"
-                                        alt="Áo" height="230" width="230">
-                                    <div>Áo</div>
-                                </router-link>
-                                <router-link class="itemMegaMenu" to="/categories/3">
-                                    <img src="https://file.hstatic.net/200000000133/file/img_megamenu2_3_ccd3e35ebe9548dc9f1cb04023b0acb8.jpg"
-                                        alt="Chân váy" height="230" width="230">
-                                    <div>Chân váy</div>
-                                </router-link>
-                                <router-link class="itemMegaMenu" to="/categories/4">
-                                    <img src="https://file.hstatic.net/200000000133/file/img_megamenu2_4_24ed06ad0f044e3ab8a33c9b397b5cd8.jpg"
-                                        alt="Quần" height="230" width="230">
-                                    <div>Quần</div>
-                                </router-link>
-                                <router-link class="itemMegaMenu" to="/categories/5">
-                                    <img src="https://file.hstatic.net/200000000133/file/img_megamenu2_5_a5bce29661434ffdad3e4cbe7e5540ea.jpg"
-                                        alt="Jumpsuit" height="230" width="230">
-                                    <div>Jumpsuit</div>
-                                </router-link>
-                                <router-link class="itemMegaMenu" to="/categories/6">
-                                    <img src="https://file.hstatic.net/200000000133/file/img_megamenu2_6_e60bb450d19f47ab9ab00ade4dc7f0ec.jpg"
-                                        alt="Homewear" height="230" width="230">
-                                    <div>Homewear</div>
-                                </router-link>
-                                <router-link class="itemMegaMenu" to="/categories/7">
-                                    <img src="https://file.hstatic.net/200000000133/file/img_megamenu2_7_896db138093d427fa735e0bb1d91abfa.jpg"
-                                        alt="Unique Collection" height="230" width="230">
-                                    <div>Unique Collection</div>
-                                </router-link>
-                                <router-link class="itemMegaMenu" to="/categories/8">
-                                    <img src="https://file.hstatic.net/200000000133/file/img_megamenu2_8_d77e4d8f842648db8c67db179ee80917.jpg"
-                                        alt="Phụ kiện" height="230" width="230">
-                                    <div>Phụ kiện</div>
-                                </router-link>
-
                             </div>
                         </div>
                     </li>
@@ -94,13 +58,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/login" class="nav-link " aria-current="page" v-if="!user">
-                            <button class="button_1 px-3" type="button">
-                                <i class="fa fa-user me-2"></i>
-                                Login
-                            </button>
-                        </router-link>
-                        <div class="dropdown" v-else>
+                        <div class="dropdown" v-if="user?.id">
                             <button class="btn button_1 dropdown-toggle d-flex justify-content-between align-items-center"
                                 type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="d-inline" v-if="!photo">
@@ -116,6 +74,12 @@
                                 <li><a class="dropdown-item" @click="editProfile">Edit Profile</a></li>
                             </ul>
                         </div>
+                        <router-link to="/login" class="nav-link " aria-current="page" v-else>
+                            <button class="button_1 px-3" type="button">
+                                <i class="fa fa-user me-2"></i>
+                                Login
+                            </button>
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -125,14 +89,15 @@
   
 <script>
 import { userStore } from "@/stores/userStore";
-import { LoginService } from "@/services";
+import { LoginService, CategoryService } from "@/services";
 
 export default {
     name: 'Navbar',
     data() {
         return {
             upHere: false,
-            user: userStore().user
+            user: userStore().user,
+            categories: []
         }
     },
     methods: {
@@ -147,7 +112,18 @@ export default {
         async editProfile()
         {
             this.$router.push('/edit-profile');
+        },
+        async fetchCategories()
+        {
+            const resp = await CategoryService.getCategory()
+            if (resp) {
+            console.log(resp)
+                this.categories = resp.data.data
+            }
         }
+    },
+    created() {
+        this.fetchCategories()
     }
 }
 </script>

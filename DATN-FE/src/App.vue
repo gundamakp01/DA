@@ -23,12 +23,6 @@ export default {
         this.isLoading = newVal;
       }
     );
-    watch(
-      () => userStore().user,
-      (newVal) => {
-        this.isShow = newVal?.name && newVal?.role === 1;
-      }
-    );
   },
 };
 </script>
@@ -37,7 +31,7 @@ export default {
   <div>
     <Loading :loading="isLoading"></Loading>
     <router-view></router-view>
-    <Chatbox v-if="isShow"/>
+    <Chatbox v-if="user?.name && user?.role === 1"/>
   </div>
 </template>
 

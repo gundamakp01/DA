@@ -30,6 +30,7 @@ const loadingRooms = ref(false);
 const messages = ref([]);
 const messagesLoaded = ref(true);
 
+const currentRoomId = ref(null);
 const currentRoom = ref(null);
 const roomActions = ref([
   { name: 'inviteUser', title: 'Invite User' },
@@ -88,7 +89,7 @@ const setup = async (username) => {
 var channel = pusher.subscribe(`chat.${userStore().user.id}`);
 channel.bind("chat-event", function (data) {
   const room = rooms.value.find(function (room) {
-    return room._id === currentRoom.value;
+    return room._id === currentRoomId.value;
   });
   room.users.forEach(function (user) {
     if (user._id == data.conversation.senderId) {
@@ -112,10 +113,10 @@ channel.bind("room-event", function (data) {
 // };
 // const sendMessage = async ({ roomId, content }) => {
 //   const admin_id = 1;
-//   currentRoom.value = rooms.value.filter(function (room) {
+//   currentRoomId.value = rooms.value.filter(function (room) {
 //     return room._id === roomId
 //   })
-//   const users = currentRoom.value[0].users.filter(function (user) {
+//   const users = currentRoomId.value[0].users.filter(function (user) {
 //     return user.id !== admin_id
 //   })
 //   var data = {
@@ -202,20 +203,6 @@ const fetchRooms = async () => {
     //   roomContacts.length === 1 && roomContacts[0].avatar
     //     ? roomContacts[0].avatar
     //     : logoAvatar
-
-    formattedRooms.push({
-      ...room,
-      roomId: key,
-      // avatar: roomAvatar,
-      index: room.lastUpdated.seconds,
-      lastMessage: {
-        content: 'Room created',
-        timestamp: formatTimestamp(
-          new Date(room.lastUpdated),
-          room.lastUpdated
-        )
-      }
-    })
   })
 
   rooms.value = rooms.value.concat(formattedRooms)
@@ -237,14 +224,14 @@ const fetchMessages = async ({ room, options = {} }) => {
     return
   }
 
-  currentRoom.value = room._id
+  currentRoomId.value = room._id
 
   const response = await RoomService.getMessageByRoomId(room._id)
   messages.value = response.data.data.conversation
   RoomService.seen(room._id)
 
   // this.incrementDbCounter('Fetch Room Messages', messages.length)
-  if (currentRoom.value !== room.roomId) return
+  if (currentRoomId.value !== room.roomId) return
 
   if (lastLoadedMessage.value) {
     previousLastLoadedMessage.value = lastLoadedMessage.value
@@ -262,7 +249,6 @@ const markMessagesSeen = (message) => {
     message.sender_id !== admin_id &&
     (!message.seen)
   ) {
-    console.log(12);
     ConversationService.seen(message._id)
   }
 };

@@ -145,9 +145,9 @@
             </div>
             <tr class="total-line total-line-gift">
               <td colspan="2">
-                <p>Sau khi "Đặt hàng" thành công, EVA DE EVA sẽ kiểm tra sản phẩm và đóng gói ngay để giao hàng cho bạn.
-                  Trong quá trình kiểm tra sản phẩm nếu có phát sinh EVA DE EVA sẽ liên hệ trực tiếp với quý khách để xin
-                  xác nhận. EVA DE EVA Xin chân thành cảm ơn!</p>
+                <p>Sau khi "Đặt hàng" thành công, FALLEN ANGEL sẽ kiểm tra sản phẩm và đóng gói ngay để giao hàng cho bạn.
+                  Trong quá trình kiểm tra sản phẩm nếu có phát sinh FALLEN ANGEL sẽ liên hệ trực tiếp với quý khách để xin
+                  xác nhận. FALLEN ANGEL Xin chân thành cảm ơn!</p>
               </td>
             </tr>
 
