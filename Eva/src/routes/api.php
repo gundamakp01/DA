@@ -66,7 +66,7 @@ Route::post('categories/{id}', [CategoryController::class, 'update']);
 Route::apiResource('blogs', BlogController::class)->except(['update']);
 Route::post('blogs/{blog}', [BlogController::class, 'update']);
 Route::prefix('categories')->controller(CategoryController::class)->group(function () {
-    Route::get('/{categoryId}/products', [ProductController::class, 'getProductByCategoryId']);
+    Route::post('/{categoryId}/products', [ProductController::class, 'getProductByCategoryId']);
     Route::get('/{categoryId}/children', [CategoryController::class, 'getCategoryByParentId']);
 });
 Route::get('/provinces', [ProvinceController::class, 'index']);
