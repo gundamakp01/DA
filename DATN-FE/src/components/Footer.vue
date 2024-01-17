@@ -2,10 +2,8 @@
     <footer class="mt-5 py-5 ">
         <div class="row container mx-auto pt-5 p-0">
             <div class="footer-col col-lg-3 col-md-6">
-                <a href="#"> <img src="../assets/img/logo2.png" alt="logo2"></a>
-                <p class="pt-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis quas eum laborum
-                    sequi, facilis
-                    ullam consequuntur iusto dicta culpa nobis</p>
+                <a href="#"> <img src="../assets/logonew2-removebg-preview.png" alt="logo2" width="250"></a>
+                <p class="pt-4">We are so excited about  receiving your further orders, and make sure that you all products will be filled in the right way.We love you ❤</p>
             </div>
             <div class="footer-col col-lg-3 col-md-6">
                 <h5 class="pb-2">Featured</h5>

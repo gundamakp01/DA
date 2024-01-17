@@ -2,7 +2,7 @@
   <section id="login">
     <div class="container">
       <router-link to="/" aria-current="page">
-        <img src="../assets/img/logo.png" alt="logo">
+        <img src="../assets/logonew1xoaphong.png" alt="logo" width="110">
       </router-link>
       <h1>Login</h1>
       <label for="email">E-Mail</label>

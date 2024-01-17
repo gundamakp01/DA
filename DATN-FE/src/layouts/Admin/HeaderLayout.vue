@@ -8,7 +8,7 @@
       <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
           <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-            <img src="../../assets/img/logo.png" alt="logo1">
+            <img src="../../assets/logonew2-removebg-preview.png" alt="logo1" width="250">
           </a>
 
           <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
