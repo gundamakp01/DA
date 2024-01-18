@@ -4,12 +4,12 @@ import Loading from "@/components/Loading.vue";
 import { watch } from "vue";
 import Chatbox from "./components/Chatbox.vue";
 export default {
-  name: "App",
+  name: "Fallen Angel",
   data() {
     return {
       isLoading: userStore().isLoading,
       user: userStore().user,
-      isShow: false
+      isShow: false,
     };
   },
   components: {
@@ -31,7 +31,7 @@ export default {
   <div>
     <Loading :loading="isLoading"></Loading>
     <router-view></router-view>
-    <Chatbox v-if="user?.name && user?.role === 1"/>
+    <Chatbox v-if="user?.name && user?.role === 1" />
   </div>
 </template>
 
