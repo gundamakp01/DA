@@ -23,6 +23,9 @@ class UserResource extends JsonResource
             'province' => $this->province->name ?? null,
             'district' => $this->district->name ?? null,
             'ward' => $this->ward->name ?? null,
+            'province_id' => $this->province_id,
+            'district_id' => $this->district_id,
+            'ward_id' => $this->ward_id,
         ];
     }
 }
