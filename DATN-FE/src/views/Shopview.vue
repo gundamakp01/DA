@@ -6,7 +6,7 @@
                 <h3>{{ category.name }}</h3>
                 <div class="filter-inner">
                     <div class="filter-head">
-                        <p class="mb-none">Bộ lọc:</p>
+                        <p class="mb-none">Filter:</p>
                     </div>
                     <div class="filter-options">
                         <!-- ./filter sortby -->
@@ -16,7 +16,7 @@
                         <div class="filter_group">
                             <div class="filter_group_block">
                                 <div class="filter_group-subtitle" @mouseover="isShow = 1" @mouseleave="isShow = 0">
-                                    <span>Thương hiệu</span>
+                                    <span>Brands</span>
                                 </div>
                                 <div :class="`filter_group-content filter-brand ${isShow === 1 ? 'd-block' : 'd-none'}`"
                                     @mouseover="isShow = 1" @mouseleave="isShow = 0" style="">
@@ -108,7 +108,7 @@
                         <div class="filter_group">
                             <div class="filter_group_block">
                                 <div class="filter_group-subtitle" @mouseover="isShow = 3" @mouseleave="isShow = 0">
-                                    <span>Khoảng giá</span>
+                                    <span>Price range</span>
                                 </div>
                                 <div :class="`filter_group-content filter-price ${isShow === 3 ? 'd-block' : 'd-none'}`"
                                     @mouseover="isShow = 3" @mouseleave="isShow = 0">
@@ -127,7 +127,7 @@
                         <div class="filter_group">
                             <div class="filter_group_block">
                                 <div class="filter_group-subtitle" @mouseover="isShow = 4" @mouseleave="isShow = 0">
-                                    <span>Giảm giá</span>
+                                    <span>Discount</span>
                                 </div>
                                 <div :class="`filter_group-content filter-event ${isShow === 4 ? 'd-block' : 'd-none'}`"
                                     @mouseover="isShow = 4" @mouseleave="isShow = 0">
@@ -154,7 +154,7 @@
             </div>
             <hr class="mx-2">
             <ul class="menuCollection">
-                <li v-for="category in categories"><span @click="category_id = category.id">{{ category.name }} </span></li>
+                <li :key="category.id" v-for="category in categories"><span @click="category_id = category.id">{{ category.name }} </span></li>
             </ul>
         </div>
         <div class="row mx-auto container">

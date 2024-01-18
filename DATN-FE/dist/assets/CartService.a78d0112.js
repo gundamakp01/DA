@@ -1,0 +1,1 @@
+import{A as t}from"./index.badbcfee.js";const c={getCart(){return t.get("carts")},createCart(r){return t.post("carts",r)},deleteCart(r){return t.delete(`carts/${r}`)},updateCart(r,e){return console.log(typeof r),t.update(`carts/${r}`,e)},getCartById(r){return t.get(`carts/${r}`)},getCartByOrderID(r){return t.get(`carts-order/${r}`)}};export{c as C};
