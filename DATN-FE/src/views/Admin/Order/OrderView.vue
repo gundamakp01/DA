@@ -164,7 +164,7 @@ export default {
         id: id
       })
       if (resp) {
-        $toast.success('Thay đổi trạng thái thành công!')
+        $toast.success('Status changed successfully!')
       }
     },
     customerAddress(order) {

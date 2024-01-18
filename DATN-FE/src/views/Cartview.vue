@@ -436,7 +436,7 @@ export default {
           },
         });
         if (order) {
-          toast.success("Đặt hàng thành công!", {
+          toast.success("Order placed successfully!", {
             timeout: 2000,
           });
           if (this.paymentMethod == 1) {

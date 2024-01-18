@@ -112,7 +112,7 @@
                                 </div>
                                 <div :class="`filter_group-content filter-price ${isShow === 3 ? 'd-block' : 'd-none'}`"
                                     @mouseover="isShow = 3" @mouseleave="isShow = 0">
-                                    <label for="customRange1" class="form-label">Khoảng giá</label>
+                                    <label for="customRange1" class="form-label">Price range</label>
                                     <input type="range" v-model="search.price" min="0" max="3000000" step="10000"
                                         class="form-range" id="customRange1">
                                     <div class="filter-price__value">
