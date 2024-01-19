@@ -34,15 +34,15 @@
           >
 
           <span class="pro-state">
-            Tình trạng: <strong>Còn hàng </strong>
+            Status: <strong>In stock </strong>
           </span>
           <span class="pro-vendor"
-            >Thương hiệu: <strong>{{ product.vendor }}</strong></span
+            >Brand: <strong>{{ product.vendor }}</strong></span
           >
         </div>
       </div>
       <div class="product-price">
-        <span class="pro-title">Giá:</span>
+        <span class="pro-title">Price:</span>
         <span class="pro-price"
           >{{
             product.discount
@@ -69,7 +69,7 @@
         data-option-index="0"
       >
         <div class="d-flex flex-column pro-title">
-          <span>Màu sắc: </span>
+          <span>Color: </span>
         </div>
         <div class="select-swap" v-for="color in product.color" :key="color">
           <div @click="cart.color = color" :class="{ 'bg-info': cart.color == color }" :data-value="color" class="py-2 px-3 border">
@@ -86,7 +86,7 @@
         data-option-index="0"
       >
         <div class="d-flex align-items-center pro-title">
-          <span>Kích thước : </span>
+          <span>Size : </span>
         </div>
         <div class="list-group">
           <label :class="{ 'bg-info': cart.size == 's' }" class="list-group-item">

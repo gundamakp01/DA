@@ -445,6 +445,9 @@ export default {
             const payment = await UserService.payment(order?.data?.data?.id);
             if (payment) {
               window.location.href = payment.data.data;
+              toast.success("Thanh toán thành công!", {
+                timeout: 2000,
+              });
             }
           }
         }
